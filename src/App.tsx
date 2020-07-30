@@ -1,10 +1,17 @@
+//Library Import
 import React, { FC, ReactElement, useState, useRef, useEffect } from "react"
+//Component Import
 import Canvas from "./Components/Canvas"
+//Style Import
 import { GlobalStyle } from "./style"
+//Type Import
 import { Coords } from "./types/objects"
 
+//Component
 const App: FC = (): ReactElement => {
+  //Canvas Ref
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  //Context State
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
 
   // #region drawing
@@ -353,6 +360,20 @@ const App: FC = (): ReactElement => {
           context.closePath()
         }
 
+        //eyedropper
+        console.log(context.getImageData(start.x, start.y, 3, 3))
+
+        //before doing canvas color, do this
+        // context.globalCompositeOperation = "destination-over"
+
+        //reflect x
+        // context.translate(0, window.innerHeight)
+        // context.scale(1, -1)
+
+        //reflect y
+        context.translate(window.innerWidth, 0)
+        context.scale(-1, 1)
+
         context.beginPath()
         context.moveTo(firstPoint.x, firstPoint.y)
 
@@ -366,14 +387,14 @@ const App: FC = (): ReactElement => {
             context.quadraticCurveTo(bezierX, bezierY, endX, endY)
           }
 
-          //fun "cage effect if this is unchecked"
-          // context.arc(
-          //   firstPoint.x,
-          //   firstPoint.y,
-          //   setLineWidth / 2,
-          //   0,
-          //   Math.PI * 2
-          // )
+          //fun "cage? effect if this is unchecked
+          context.arc(
+            firstPoint.x,
+            firstPoint.y,
+            setLineWidth / 2,
+            0,
+            Math.PI * 2
+          )
 
           context.lineTo(end.x, end.y)
 
@@ -437,7 +458,11 @@ const App: FC = (): ReactElement => {
   }, [context])
   return (
     <>
-      <Canvas canvasRef={canvasRef} />
+      <Canvas
+        canvasRef={canvasRef}
+        width={window.innerWidth}
+        height={window.innerHeight}
+      />
       <GlobalStyle />
     </>
   )
