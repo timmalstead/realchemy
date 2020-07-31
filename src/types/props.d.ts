@@ -1,6 +1,12 @@
 import { MutableRefObject } from "react"
 
-export type reactCanvasRef = MutableRefObject<HTMLCanvasElement>
+type reactCanvasRef = MutableRefObject<HTMLCanvasElement>
+
+export interface appToCanvas {
+  canvasRef: reactCanvasRef
+  width: number
+  height: number
+}
 
 export interface canvasLogic {
   canvasRef: reactCanvasRef

@@ -13,7 +13,7 @@
     "build": "[ -d './build' ]; npm run clear; npm run webpack_build && npm run copy_public"
   },
   "author": "Timothy Malstead timmalstead@gmail.com",
-  "license": "MIT",
+  "coypright": "©2020 Timothy Malstead -- this software may not be copied or modified, in whole or in part without express and explicit permission from owner (Timothy Malstead)",
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
