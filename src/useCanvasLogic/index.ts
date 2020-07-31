@@ -1,6 +1,6 @@
 import { useEffect } from "react"
-import { drawingLogic } from "../types/props"
-import { Coords } from "../types/objects"
+import { canvasLogic } from "../types/props"
+import { coords } from "../types/objects"
 
 //#region other drawing logic
 // #region drawing
@@ -449,19 +449,17 @@ import { Coords } from "../types/objects"
 //#endregion
 //#endregion
 
-const useDrawingLogic = ({
+const useCanvasLogic = ({
   canvasRef,
   context,
   setContext,
-}: drawingLogic): void => {
+}: canvasLogic): void => {
   useEffect(() => {
     let mouseDown: boolean = false
     let [canvasOffsetLeft, canvasOffsetTop]: number[] = [0, 0]
-    let [start, end]: Coords[] = [
-      { x: 0, y: 0 },
-      { x: 0, y: 0 },
-    ]
-    const points: Coords[] = []
+    let start: coords
+    let end: coords
+    const points: coords[] = []
     const setLineWidth: number = 10
     const paintColor: string = "#FF0000"
 
@@ -480,10 +478,6 @@ const useDrawingLogic = ({
       }
     }
 
-    const handleMouseUp = (): void => {
-      mouseDown = false
-    }
-
     const handleMouseMove = (e: MouseEvent): void => {
       if (mouseDown && context) {
         start = {
@@ -498,7 +492,7 @@ const useDrawingLogic = ({
 
         points.push(start)
 
-        const firstPoint: Coords = points[0]
+        const firstPoint: coords = points[0]
 
         context.strokeStyle = paintColor
         context.lineCap = "round"
@@ -559,8 +553,8 @@ const useDrawingLogic = ({
 
       if (renderContext) {
         canvasRef.current.addEventListener("mousedown", handleMouseDown)
-        canvasRef.current.addEventListener("mouseup", handleMouseUp)
         canvasRef.current.addEventListener("mousemove", handleMouseMove)
+        canvasRef.current.addEventListener("mouseup", () => (mouseDown = false))
 
         canvasOffsetLeft = canvasRef.current.offsetLeft
         canvasOffsetTop = canvasRef.current.offsetTop
@@ -571,4 +565,4 @@ const useDrawingLogic = ({
   }, [context])
 }
 
-export default useDrawingLogic
+export default useCanvasLogic

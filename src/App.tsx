@@ -1,20 +1,18 @@
 import React, { FC, ReactElement, useState, useRef } from "react"
-import Canvas from "./components/Canvas"
-import useDrawingLogic from "./useDrawingLogic"
+import useCanvasLogic from "./useCanvasLogic"
 import GlobalStyle from "./globalStyle"
 
 const App: FC = (): ReactElement => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-  useDrawingLogic({ canvasRef, context, setContext })
+  const { innerWidth, innerHeight } = window
+  useCanvasLogic({ canvasRef, context, setContext })
 
   return (
     <>
-      <Canvas
-        canvasRef={canvasRef}
-        width={window.innerWidth}
-        height={window.innerHeight}
-      />
+      <canvas ref={canvasRef} width={innerWidth} height={innerHeight}>
+        <span>Looks like your browser does not support canvas.</span>
+      </canvas>
       <GlobalStyle />
     </>
   )
