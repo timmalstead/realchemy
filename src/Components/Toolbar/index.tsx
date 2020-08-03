@@ -1,58 +1,50 @@
-import React, { FC, ReactElement, useState, useCallback, useRef } from "react"
+import React, { FC, ReactElement, useState, useRef } from "react"
 import { coords, positionParams } from "../../types/objects"
 import { Tools } from "./style"
+
+const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }
 
 const Toolbar: FC = (): ReactElement => {
   const savedPosition = useRef<positionParams | null>(null)
   const [dragInfo, setDragInfo] = useState<positionParams>({
     isDragging: false,
     origin: { x: 0, y: 0 },
-    translation: { x: 0, y: 0 },
-    lastTranslation: { x: 0, y: 0 },
+    translation: startingPosition,
+    lastTranslation: startingPosition,
   })
 
-  const handleMouseDown = useCallback(
-    ({ clientX, clientY }: MouseEvent): void => {
-      window.addEventListener("mousemove", handleMouseMove)
-      window.addEventListener("mouseup", handleMouseUp)
-      let [translation, lastTranslation]: coords[] = [
-        { x: 0, y: 0 },
-        { x: 0, y: 0 },
-      ]
-      if (savedPosition.current) {
-        translation = savedPosition.current.translation
-        lastTranslation = savedPosition.current.lastTranslation
-      }
-      setDragInfo({
-        isDragging: true,
-        origin: { x: clientX, y: clientY },
-        translation,
-        lastTranslation,
-      })
-    },
-    []
-  )
+  const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
+    let [translation, lastTranslation]: coords[] = [
+      startingPosition,
+      startingPosition,
+    ]
+    if (savedPosition.current) {
+      translation = savedPosition.current.translation
+      lastTranslation = savedPosition.current.lastTranslation
+    }
+    setDragInfo({
+      isDragging: true,
+      origin: { x: clientX, y: clientY },
+      translation,
+      lastTranslation,
+    })
+  }
 
-  const handleMouseMove = useCallback(
-    ({ clientX, clientY }: MouseEvent): void => {
-      if (dragInfo.isDragging) {
-        const { origin, lastTranslation } = dragInfo
-        setDragInfo({
-          ...dragInfo,
-          translation: {
-            x: Math.abs(clientX - origin.x + lastTranslation.x),
-            y: Math.abs(clientY - origin.y + lastTranslation.y),
-          },
-        })
-      }
-    },
-    [dragInfo.isDragging]
-  )
-
-  const handleMouseUp = useCallback((): void => {
+  const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
     if (dragInfo.isDragging) {
-      window.removeEventListener("mousemove", handleMouseMove)
-      window.removeEventListener("mouseup", handleMouseUp)
+      const { origin, lastTranslation } = dragInfo
+      setDragInfo({
+        ...dragInfo,
+        translation: {
+          x: Math.abs(clientX - origin.x + lastTranslation.x),
+          y: Math.abs(clientY - origin.y + lastTranslation.y),
+        },
+      })
+    }
+  }
+
+  const handleMouseUp = (): void => {
+    if (dragInfo.isDragging) {
       const { translation } = dragInfo
       const newPositionData = {
         ...dragInfo,
@@ -63,7 +55,7 @@ const Toolbar: FC = (): ReactElement => {
       setDragInfo(newPositionData)
       savedPosition.current = newPositionData
     }
-  }, [dragInfo.translation])
+  }
 
   const toolbarPosition = {
     left: `${dragInfo.translation.x}px`,
@@ -74,7 +66,7 @@ const Toolbar: FC = (): ReactElement => {
     <Tools
       onMouseDown={e => handleMouseDown(e)}
       onMouseMove={e => handleMouseMove(e)}
-      onMouseUp={() => handleMouseUp()}
+      onMouseUp={handleMouseUp}
       isDragging={dragInfo.isDragging}
       style={toolbarPosition}
     />

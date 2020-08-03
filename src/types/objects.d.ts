@@ -1,5 +1,3 @@
-import { MutableRefObject } from "react"
-
 export type coords = { x: number; y: number }
 
 export type colorPack = {
