@@ -463,22 +463,22 @@ const useCanvasLogic = ({
     const setLineWidth: number = 10
     const paintColor: string = "#FF0000"
 
-    const handleMouseDown = (e: MouseEvent): void => {
+    const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       points.length = 0
       mouseDown = true
 
       start = {
-        x: e.clientX - canvasOffsetLeft,
-        y: e.clientY - canvasOffsetTop,
+        x: clientX - canvasOffsetLeft,
+        y: clientY - canvasOffsetTop,
       }
 
       end = {
-        x: e.clientX - canvasOffsetLeft,
-        y: e.clientY - canvasOffsetTop,
+        x: clientX - canvasOffsetLeft,
+        y: clientY - canvasOffsetTop,
       }
     }
 
-    const handleMouseMove = (e: MouseEvent): void => {
+    const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown && context) {
         start = {
           x: end.x,
@@ -486,8 +486,8 @@ const useCanvasLogic = ({
         }
 
         end = {
-          x: e.clientX + canvasOffsetLeft,
-          y: e.clientY + canvasOffsetTop,
+          x: clientX + canvasOffsetLeft,
+          y: clientY + canvasOffsetTop,
         }
 
         points.push(start)

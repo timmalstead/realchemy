@@ -1,4 +1,5 @@
 import React, { FC, ReactElement, useState, useRef } from "react"
+// import Draggable from "./components/Draggable"
 import Toolbar from "./components/Toolbar"
 import Canvas from "./components/Canvas"
 import useCanvasLogic from "./useCanvasLogic"
@@ -15,7 +16,9 @@ const App: FC = (): ReactElement => {
 
   return (
     <>
+      {/* <Draggable> */}
       <Toolbar />
+      {/* </Draggable> */}
       <Canvas canvasRef={canvasRef} width={innerWidth} height={innerHeight} />
       <GlobalStyle />
     </>
