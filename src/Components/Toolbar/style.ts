@@ -7,6 +7,7 @@ const Tools = styled.main`
   position: absolute;
   z-index: 1;
   background-color: ${colorTheme.main};
+  cursor: ${props => (props.isDragging ? "grabbing" : "grab")};
 `
 
 export { Tools }

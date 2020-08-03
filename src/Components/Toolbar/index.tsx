@@ -7,81 +7,48 @@ import React, {
   useMemo,
   useRef,
 } from "react"
-import { coords, positionParams } from "../../types/objects"
+import { coords } from "../../types/objects"
 import { Tools } from "./style"
 
-const initialPosition: coords = { x: 0, y: 0 }
-
 const Toolbar: FC = (): ReactElement => {
-  // const savedPosition = useRef<coords>({ x: 0, y: 0 })
-  const [drag, setDrag] = useState<positionParams>({
-    isDragging: false,
-    origin: initialPosition,
-    translation: initialPosition,
-  })
-  console.log("toolbar render")
+  let savedPosition = useRef<coords>({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState<boolean>(false)
 
-  const handleMouseDown = useCallback(
-    ({ clientX, clientY }: MouseEvent): void => {
-      console.log("drag down")
-      setDrag({
-        ...drag,
-        isDragging: true,
-        origin: { x: clientX, y: clientY },
-      })
-    },
-    []
-  )
+  const handleMouseDown = useCallback((): void => {
+    setIsDragging(true)
+  }, [])
 
   const handleMouseMove = useCallback(
     ({ clientX, clientY }: MouseEvent): void => {
-      if (drag.isDragging) {
-        console.log("drag moving")
-        const translation: coords = {
-          x: clientX - drag.origin.x,
-          y: clientY - drag.origin.y,
-        }
-        setDrag({ ...drag, translation })
-      }
+      savedPosition.current = { x: clientX, y: clientY }
     },
-    [drag.origin]
+    [savedPosition.current, isDragging]
   )
 
   const handleMouseUp = useCallback(
     ({ clientX, clientY }: MouseEvent): void => {
-      console.log("drag up")
-      const origin: coords = {
-        x: clientX,
-        y: clientY,
-      }
-      const translation: coords = {
-        x: clientX,
-        y: clientY,
-      }
-      setDrag({ origin, translation, isDragging: false })
+      savedPosition.current = { x: clientX, y: clientY }
+      setIsDragging(false)
     },
     []
   )
 
   useEffect(() => {
-    if (drag.isDragging) {
+    if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove)
       window.addEventListener("mouseup", handleMouseUp)
-    }
-
-    return () => (
+    } else {
       window.removeEventListener("mousemove", handleMouseMove),
-      window.removeEventListener("mouseup", handleMouseUp)
-    )
-  }, [drag.isDragging, handleMouseMove, handleMouseUp])
+        window.removeEventListener("mouseup", handleMouseUp)
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp])
 
   const toolbarPosition = useMemo(
     () => ({
-      left: `${drag.translation.x}px`,
-      top: `${drag.translation.y}px`,
-      cursor: `${drag.isDragging ? "grabbing" : "grab"}`,
+      left: `${savedPosition.current.x}px`,
+      top: `${savedPosition.current.y}px`,
     }),
-    [drag.translation, drag.isDragging]
+    [savedPosition.current, isDragging]
   )
 
   return (
@@ -89,6 +56,7 @@ const Toolbar: FC = (): ReactElement => {
       onMouseDown={e => handleMouseDown(e)}
       onMouseMove={e => handleMouseMove(e)}
       onMouseUp={e => handleMouseUp(e)}
+      isDragging={isDragging}
       style={toolbarPosition}
     />
   )
