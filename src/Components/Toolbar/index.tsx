@@ -3,8 +3,8 @@ import { coords, positionParams } from "../../types/objects"
 import { Tools } from "./style"
 
 const Toolbar: FC = (): ReactElement => {
-  let savedPosition = useRef<coords>({ x: 0, y: 0 })
-  const [dragInfo, setDragInfo] = useState({
+  const savedPosition = useRef<positionParams | null>(null)
+  const [dragInfo, setDragInfo] = useState<positionParams>({
     isDragging: false,
     origin: { x: 0, y: 0 },
     translation: { x: 0, y: 0 },
@@ -15,10 +15,19 @@ const Toolbar: FC = (): ReactElement => {
     ({ clientX, clientY }: MouseEvent): void => {
       window.addEventListener("mousemove", handleMouseMove)
       window.addEventListener("mouseup", handleMouseUp)
+      let [translation, lastTranslation]: coords[] = [
+        { x: 0, y: 0 },
+        { x: 0, y: 0 },
+      ]
+      if (savedPosition.current) {
+        translation = savedPosition.current.translation
+        lastTranslation = savedPosition.current.lastTranslation
+      }
       setDragInfo({
-        ...dragInfo,
-        origin: { x: clientX, y: clientY },
         isDragging: true,
+        origin: { x: clientX, y: clientY },
+        translation,
+        lastTranslation,
       })
     },
     []
@@ -31,8 +40,8 @@ const Toolbar: FC = (): ReactElement => {
         setDragInfo({
           ...dragInfo,
           translation: {
-            x: clientX - (origin.x + lastTranslation.x),
-            y: clientY - (origin.y + lastTranslation.y),
+            x: Math.abs(clientX - origin.x + lastTranslation.x),
+            y: Math.abs(clientY - origin.y + lastTranslation.y),
           },
         })
       }
@@ -44,26 +53,21 @@ const Toolbar: FC = (): ReactElement => {
     if (dragInfo.isDragging) {
       window.removeEventListener("mousemove", handleMouseMove)
       window.removeEventListener("mouseup", handleMouseUp)
-
       const { translation } = dragInfo
-      console.log(translation)
-      savedPosition.current.x = translation.x
-      savedPosition.current.y = translation.y
-      setDragInfo({
+      const newPositionData = {
         ...dragInfo,
         isDragging: false,
         lastTranslation: { x: translation.x, y: translation.y },
-      })
+      }
+
+      setDragInfo(newPositionData)
+      savedPosition.current = newPositionData
     }
   }, [dragInfo.translation])
 
   const toolbarPosition = {
-    left: `${
-      dragInfo.isDragging ? dragInfo.translation.x : savedPosition.current.x
-    }px`,
-    top: `${
-      dragInfo.isDragging ? dragInfo.translation.y : savedPosition.current.y
-    }px`,
+    left: `${dragInfo.translation.x}px`,
+    top: `${dragInfo.translation.y}px`,
   }
 
   return (
