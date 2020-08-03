@@ -11,6 +11,7 @@ export type colorPack = {
 
 export interface positionParams {
   isDragging: boolean
-  origin: MutableRefObject<coords>
-  translation: MutableRefObject<coords>
+  origin: coords
+  translation: coords
+  lastTranslation: coords
 }
