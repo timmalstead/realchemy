@@ -66,6 +66,7 @@ const Toolbar: FC = (): ReactElement => {
     <Tools
       onMouseDown={e => handleMouseDown(e)}
       onMouseMove={e => handleMouseMove(e)}
+      onMouseLeave={e => handleMouseMove(e)}
       onMouseUp={handleMouseUp}
       isDragging={dragInfo.isDragging}
       style={toolbarPosition}
