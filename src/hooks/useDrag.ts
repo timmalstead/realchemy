@@ -59,8 +59,10 @@ const useDrag = (startingPosition: coords) => {
     top: `${dragInfo.translation.y}px`,
   }
 
+  const { isDragging } = dragInfo
+
   return {
-    dragInfo,
+    isDragging,
     toolbarPosition,
     handleMouseDown,
     handleMouseMove,

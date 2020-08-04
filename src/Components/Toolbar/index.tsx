@@ -11,7 +11,7 @@ const Toolbar: FC<appToToolbar> = ({
   setToolOptions,
 }: appToToolbar): ReactElement => {
   const {
-    dragInfo,
+    isDragging,
     toolbarPosition,
     handleMouseDown,
     handleMouseMove,
@@ -21,15 +21,11 @@ const Toolbar: FC<appToToolbar> = ({
   return (
     <Tools style={toolbarPosition}>
       <ToolHeader
-        // @ts-ignore
         onMouseDown={e => handleMouseDown(e)}
-        // @ts-ignore
         onMouseMove={e => handleMouseMove(e)}
-        // @ts-ignore
         onMouseLeave={e => handleMouseMove(e)}
         onMouseUp={handleMouseUp}
-        // @ts-ignore
-        isDragging={dragInfo.isDragging}
+        isDragging={isDragging}
       ></ToolHeader>
     </Tools>
   )
