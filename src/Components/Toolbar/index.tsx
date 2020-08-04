@@ -1,11 +1,15 @@
 import React, { FC, ReactElement } from "react"
 import { coords } from "../../types/objects"
+import { appToToolbar } from "../../types/props"
 import useDrag from "../../hooks/useDrag"
 import { Tools, ToolHeader } from "./style"
 
 const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }
 
-const Toolbar: FC = (): ReactElement => {
+const Toolbar: FC<appToToolbar> = ({
+  toolOptions,
+  setToolOptions,
+}: appToToolbar): ReactElement => {
   const {
     dragInfo,
     toolbarPosition,
@@ -16,7 +20,8 @@ const Toolbar: FC = (): ReactElement => {
 
   return (
     <Tools style={toolbarPosition}>
-      <ToolHeader // @ts-ignore
+      <ToolHeader
+        // @ts-ignore
         onMouseDown={e => handleMouseDown(e)}
         // @ts-ignore
         onMouseMove={e => handleMouseMove(e)}

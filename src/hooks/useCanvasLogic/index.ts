@@ -450,6 +450,7 @@ import { coords } from "../../types/objects"
 //#endregion
 
 const useCanvasLogic = ({
+  toolOptions,
   canvasRef,
   context,
   setContext,

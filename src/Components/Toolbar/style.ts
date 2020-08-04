@@ -4,8 +4,10 @@ import colorTheme from "../../colors"
 const { main, dark } = colorTheme
 
 const Tools = styled.main`
-  width: 4em;
-  height: 25em;
+  min-width: 4em;
+  max-width: 10em;
+  min-height: 25em;
+  max-height: 40em;
   position: absolute;
   z-index: 1;
   border-radius: 0.25em;
@@ -15,6 +17,7 @@ const Tools = styled.main`
   resize: both;
   object-fit: contain;
 `
+
 const ToolHeader = styled.header`
   width: 100%;
   height: 1.5em;
