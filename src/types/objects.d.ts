@@ -1,6 +1,6 @@
 export type coords = { x: number; y: number }
 
-export type colorPack = {
+export interface colorPack {
   main: string
   dark: string
   text: string

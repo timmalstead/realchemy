@@ -450,6 +450,9 @@ import { coords } from "../../types/objects"
 //#endregion
 
 const useCanvasLogic = ({
+  innerWidth,
+  innerHeight,
+  devicePixelRatio,
   toolOptions,
   canvasRef,
   context,
@@ -461,21 +464,37 @@ const useCanvasLogic = ({
     let start: coords
     let end: coords
     const points: coords[] = []
+
+    const {
+      reflectX,
+      reflectY,
+      isBrush,
+      isFreehand,
+      lineWidth,
+      lineCap,
+      miterLimit,
+      colorOne,
+      colorTwo,
+      colorStops,
+    } = toolOptions
+
     const setLineWidth: number = 10
     const paintColor: string = "#FF0000"
 
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
-      points.length = 0
-      mouseDown = true
+      if (context) {
+        points.length = 0
+        mouseDown = true
 
-      start = {
-        x: clientX - canvasOffsetLeft,
-        y: clientY - canvasOffsetTop,
-      }
+        start = {
+          x: clientX - canvasOffsetLeft,
+          y: clientY - canvasOffsetTop,
+        }
 
-      end = {
-        x: clientX - canvasOffsetLeft,
-        y: clientY - canvasOffsetTop,
+        end = {
+          x: clientX - canvasOffsetLeft,
+          y: clientY - canvasOffsetTop,
+        }
       }
     }
 
@@ -496,26 +515,22 @@ const useCanvasLogic = ({
         const firstPoint: coords = points[0]
 
         context.strokeStyle = paintColor
-        context.lineCap = "round"
+        context.lineCap = lineCap
 
-        context.miterLimit = 0.01
+        context.miterLimit = miterLimit
 
-        context.lineWidth = setLineWidth
+        context.lineWidth = lineWidth
 
         if (points.length > 10) {
           context.beginPath()
-          context.arc(
-            firstPoint.x,
-            firstPoint.y,
-            setLineWidth / 2,
-            0,
-            Math.PI * 2
-          )
+          context.arc(firstPoint.x, firstPoint.y, lineWidth / 2, 0, Math.PI * 2)
           context.closePath()
         }
 
-        context.translate(window.innerWidth, 0)
-        context.scale(-1, 1)
+        if (reflectX) {
+          context.translate(innerWidth, 0)
+          context.scale(-1, 1)
+        }
 
         context.beginPath()
         context.moveTo(firstPoint.x, firstPoint.y)
@@ -561,6 +576,9 @@ const useCanvasLogic = ({
         canvasOffsetTop = canvasRef.current.offsetTop
 
         setContext(renderContext)
+      }
+      if (context) {
+        context.scale(devicePixelRatio, devicePixelRatio)
       }
     }
   }, [context])

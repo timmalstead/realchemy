@@ -10,15 +10,39 @@ import GlobalStyle from "./globalStyle"
 const App: FC = (): ReactElement => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-  const [toolOptions, setToolOptions] = useState<drawingOptions | null>(null)
-  const { innerWidth, innerHeight } = window
+  const [toolOptions, setToolOptions] = useState<drawingOptions>({
+    reflectX: true,
+    reflectY: false,
+    isBrush: false,
+    isFreehand: true,
+    lineWidth: 10,
+    lineCap: "round",
+    miterLimit: 0.01,
+    colorOne: "",
+    colorTwo: "",
+    colorStops: [""],
+  })
+  const { innerWidth, innerHeight, devicePixelRatio } = window
 
-  useCanvasLogic({ toolOptions, canvasRef, context, setContext })
+  useCanvasLogic({
+    innerWidth,
+    innerHeight,
+    devicePixelRatio,
+    toolOptions,
+    canvasRef,
+    context,
+    setContext,
+  })
 
   return (
     <>
       <Toolbar toolOptions={toolOptions} setToolOptions={setToolOptions} />
-      <Canvas canvasRef={canvasRef} width={innerWidth} height={innerHeight} />
+      <Canvas
+        devicePixelRatio={devicePixelRatio}
+        canvasRef={canvasRef}
+        width={innerWidth}
+        height={innerHeight}
+      />
       <GlobalStyle />
     </>
   )

@@ -8,6 +8,7 @@ export type drawingOptions = {
   isBrush: boolean
   isFreehand: boolean
   lineWidth: number
+  lineCap: "butt" | "round" | "square"
   miterLimit: number
   colorOne: string
   colorTwo: string
@@ -15,6 +16,9 @@ export type drawingOptions = {
 }
 
 export interface canvasLogic {
+  innerWidth: number
+  innerHeight: number
+  devicePixelRatio: number
   canvasRef: reactCanvasRef
   toolOptions: drawingOptions | null
   context: CanvasRenderingContext2D | null
@@ -27,6 +31,7 @@ export interface appToToolbar {
 }
 
 export interface appToCanvas {
+  devicePixelRatio: number
   canvasRef: reactCanvasRef
   width: number
   height: number

@@ -1,7 +1,7 @@
-//commented out for development
+//gotta figure out splitting for production better though
 
-// const CompressionPlugin = require("compression-webpack-plugin")
-// const zopfli = require("@gfx/zopfli")
+const CompressionPlugin = require("compression-webpack-plugin")
+const zopfli = require("@gfx/zopfli")
 
 const config = {
   entry: "./src/index.tsx",
@@ -40,16 +40,19 @@ const config = {
     open: true,
     port: 3000,
   },
-  // plugins: [
-  //   new CompressionPlugin({
-  //     compressionOptions: {
-  //       numiterations: 10,
-  //     },
-  //     algorithm(input, compressionOptions, callback) {
-  //       return zopfli.gzip(input, compressionOptions, callback)
-  //     },
-  //   }),
-  // ],
+  plugins:
+    process.env.NODE_ENV === "production"
+      ? [
+          new CompressionPlugin({
+            compressionOptions: {
+              numiterations: 10,
+            },
+            algorithm(input, compressionOptions, callback) {
+              return zopfli.gzip(input, compressionOptions, callback)
+            },
+          }),
+        ]
+      : [],
 }
 
 module.exports = config
