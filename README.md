@@ -8,3 +8,9 @@ https://engineering.datorama.com/mastering-drag-drop-using-reactjs-hooks-fb58dc1
 do a copyright and lame info like that component
 
 need to figure out path intersection
+
+do dynamic import of toolbar mobile or full size based on environment?
+
+okay, so you can do diagonal reflects, will research more how to do that
+
+how to zoom?

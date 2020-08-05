@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import colorTheme from "../../colors"
+import colorTheme from "../../constants/colors"
 
 const { main, dark } = colorTheme
 

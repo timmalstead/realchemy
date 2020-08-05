@@ -478,7 +478,6 @@ const useCanvasLogic = ({
       colorStops,
     } = toolOptions
 
-    const setLineWidth: number = 10
     const paintColor: string = "#FF0000"
 
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
@@ -527,9 +526,15 @@ const useCanvasLogic = ({
           context.closePath()
         }
 
+        //way to handle 4 or way reflection?
         if (reflectX) {
           context.translate(innerWidth, 0)
           context.scale(-1, 1)
+        }
+
+        if (reflectY) {
+          context.translate(0, innerHeight)
+          context.scale(1, -1)
         }
 
         context.beginPath()

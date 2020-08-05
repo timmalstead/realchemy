@@ -1,13 +1,13 @@
 import React, { FC, ReactElement } from "react"
-import { coords } from "../../types/objects"
-import { appToToolbar } from "../../types/props"
+//component imports
 import useDrag from "../../hooks/useDrag"
+import { appToToolbar } from "../../types/props"
+import { coords } from "../../types/objects"
 import { Tools, ToolHeader } from "./style"
 
 const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }
 
 const Toolbar: FC<appToToolbar> = ({
-  toolOptions,
   setToolOptions,
 }: appToToolbar): ReactElement => {
   const {

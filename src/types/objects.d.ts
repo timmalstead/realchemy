@@ -1,6 +1,19 @@
 export type coords = { x: number; y: number }
 
-export interface colorPack {
+export type drawingOptions = {
+  reflectX: boolean
+  reflectY: boolean
+  isBrush: boolean
+  isFreehand: boolean
+  lineWidth: number
+  lineCap: "butt" | "round" | "square"
+  miterLimit: number
+  colorOne: string
+  colorTwo: string
+  colorStops: string[]
+}
+
+export type colorPack = {
   main: string
   dark: string
   text: string
@@ -8,7 +21,7 @@ export interface colorPack {
   contrastDark: string
 }
 
-export interface positionParams {
+export type positionParams = {
   isDragging: boolean
   origin: coords
   translation: coords
