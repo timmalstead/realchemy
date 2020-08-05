@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState, useRef } from "react"
+import React, { FC, ReactElement, useRef } from "react"
 import useCanvasLogic from "../../hooks/useCanvasLogic"
 import { appToCanvas } from "../../types/props"
 
@@ -6,7 +6,6 @@ const Canvas: FC<appToCanvas> = ({
   toolOptions,
 }: appToCanvas): ReactElement => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
   const { innerWidth, innerHeight, devicePixelRatio } = window
 
   useCanvasLogic({
@@ -15,8 +14,6 @@ const Canvas: FC<appToCanvas> = ({
     devicePixelRatio,
     toolOptions,
     canvasRef,
-    context,
-    setContext,
   })
 
   return (

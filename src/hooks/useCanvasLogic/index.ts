@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { canvasLogic } from "../../types/props"
 import { coords } from "../../types/objects"
 
@@ -455,9 +455,8 @@ const useCanvasLogic = ({
   devicePixelRatio,
   toolOptions,
   canvasRef,
-  context,
-  setContext,
 }: canvasLogic): void => {
+  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
   useEffect(() => {
     let mouseDown: boolean = false
     let [canvasOffsetLeft, canvasOffsetTop]: number[] = [0, 0]

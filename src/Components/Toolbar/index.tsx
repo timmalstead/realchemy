@@ -26,7 +26,7 @@ const Toolbar: FC<appToToolbar> = ({
         onMouseLeave={e => handleMouseMove(e)}
         onMouseUp={handleMouseUp}
         isDragging={isDragging}
-      ></ToolHeader>
+      />
     </Tools>
   )
 }

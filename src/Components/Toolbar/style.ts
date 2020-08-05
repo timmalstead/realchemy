@@ -3,7 +3,7 @@ import colorTheme from "../../constants/colors"
 
 const { main, dark } = colorTheme
 
-const Tools = styled.main`
+export const Tools = styled.main`
   min-width: 4em;
   max-width: 10em;
   min-height: 25em;
@@ -18,11 +18,9 @@ const Tools = styled.main`
   object-fit: contain;
 `
 
-const ToolHeader = styled.header`
+export const ToolHeader = styled.header`
   width: 100%;
   height: 1.5em;
   background-color: ${dark};
   cursor: ${props => (props.isDragging ? "grabbing" : "grab")};
 `
-
-export { Tools, ToolHeader }

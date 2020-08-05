@@ -7,8 +7,6 @@ export interface canvasLogic {
   devicePixelRatio: number
   canvasRef: MutableRefObject<HTMLCanvasElement>
   toolOptions: drawingOptions
-  context: CanvasRenderingContext2D | null
-  setContext: any
 }
 
 export interface appToToolbar {
