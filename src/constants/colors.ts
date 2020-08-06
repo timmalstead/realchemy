@@ -13,7 +13,7 @@ const colorHash: { [environment: string]: colorPack } = {
   browser: {
     main: "#293284",
     dark: "#180f64",
-    text: "white",
+    text: "#ebebeb",
     contrastLight: "black",
     contrastDark: "pink",
   },

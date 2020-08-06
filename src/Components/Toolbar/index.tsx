@@ -1,15 +1,16 @@
-import React, { FC, ReactElement } from "react"
+import React, { FC, ReactElement, useState } from "react"
 //component imports
 import useDrag from "../../hooks/useDrag"
 import { appToToolbar } from "../../types/props"
 import { coords } from "../../types/objects"
-import { Tools, ToolHeader } from "./style"
+import { Tools, ToolHeader, CollapseArrow, ToolHolder } from "./style"
 
 const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }
 
 const Toolbar: FC<appToToolbar> = ({
   setToolOptions,
 }: appToToolbar): ReactElement => {
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
   const {
     isDragging,
     toolbarPosition,
@@ -26,7 +27,13 @@ const Toolbar: FC<appToToolbar> = ({
         onMouseLeave={e => handleMouseMove(e)}
         onMouseUp={handleMouseUp}
         isDragging={isDragging}
-      />
+      >
+        <CollapseArrow
+          onClick={() => setIsCollapsed(prevState => !prevState)}
+          isCollapsed={isCollapsed}
+        />
+      </ToolHeader>
+      <ToolHolder isCollapsed={isCollapsed}></ToolHolder>
     </Tools>
   )
 }
