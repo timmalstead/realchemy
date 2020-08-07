@@ -13,4 +13,23 @@ do dynamic import of toolbar mobile or full size based on environment?
 
 okay, so you can do diagonal reflects, will research more how to do that
 
-how to zoom?
+before we see about native:
+
+shapes
+x and y reflects
+color selections
+clear to three colors
+
+later:
+
+more reflects
+path intersection on shapes
+different toolbars for environments
+dynamic import of toolbars
+erase
+strokes
+grads
+eyedropper
+key bindings
+stamps
+no doubt lots of other stuff too

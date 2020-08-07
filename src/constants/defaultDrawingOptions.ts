@@ -1,8 +1,8 @@
 import { drawingOptions } from "../types/objects"
 
 const defOpts: drawingOptions = {
-  reflectX: false,
-  reflectY: true,
+  reflectX: true,
+  reflectY: false,
   isBrush: false,
   isFreehand: true,
   lineWidth: 10,
