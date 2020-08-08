@@ -5,6 +5,7 @@ export type drawingOptions = {
   reflectY: boolean
   isBrush: boolean
   isFreehand: boolean
+  isGradient: boolean
   lineWidth: number
   lineCap: "butt" | "round" | "square"
   miterLimit: number

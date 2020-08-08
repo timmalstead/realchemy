@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react"
+import React, { FC, ReactElement, useState, useEffect } from "react"
 import Toolbar from "./components/Toolbar"
 import Canvas from "./components/Canvas"
 import defOpts from "./constants/defaultDrawingOptions"
@@ -7,6 +7,10 @@ import GlobalStyle from "./globalStyle"
 
 const App: FC = (): ReactElement => {
   const [toolOptions, setToolOptions] = useState<drawingOptions>(defOpts)
+
+  useEffect(() => {
+    localStorage.savedToolOptions = JSON.stringify(toolOptions)
+  }, [toolOptions])
 
   return (
     <>

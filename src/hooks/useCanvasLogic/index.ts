@@ -457,7 +457,7 @@ const useCanvasLogic = ({
   canvasRef,
 }: canvasLogic): void => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-  useEffect(() => {
+  useEffect((): void => {
     let mouseDown: boolean = false
     let [canvasOffsetLeft, canvasOffsetTop]: number[] = [0, 0]
     let start: coords
@@ -469,6 +469,7 @@ const useCanvasLogic = ({
       reflectY,
       isBrush,
       isFreehand,
+      isGradient,
       lineWidth,
       lineCap,
       miterLimit,
@@ -482,7 +483,6 @@ const useCanvasLogic = ({
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       if (context) {
         points.length = 0
-        mouseDown = true
 
         start = {
           x: clientX - canvasOffsetLeft,
@@ -493,11 +493,43 @@ const useCanvasLogic = ({
           x: clientX - canvasOffsetLeft,
           y: clientY - canvasOffsetTop,
         }
+
+        mouseDown = true
       }
     }
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown && context) {
+        context.strokeStyle = paintColor
+        context.lineCap = lineCap
+        context.miterLimit = miterLimit
+        context.lineWidth = lineWidth
+
+        const gradient = context.createLinearGradient(
+          canvasOffsetTop,
+          canvasOffsetLeft,
+          end.x,
+          end.y
+        )
+
+        gradient.addColorStop(0, "#404ce7")
+        gradient.addColorStop(0.5, "#e4306c80")
+        gradient.addColorStop(0.75, "#e4306cbf")
+        gradient.addColorStop(1, "#ffc74100")
+
+        context.fillStyle = gradient
+
+        //way to handle 4 or way reflection?
+        if (reflectX) {
+          context.translate(innerWidth, 0)
+          context.scale(-1, 1)
+        }
+
+        if (reflectY) {
+          context.translate(0, innerHeight)
+          context.scale(1, -1)
+        }
+
         start = {
           x: end.x,
           y: end.y,
@@ -512,28 +544,10 @@ const useCanvasLogic = ({
 
         const firstPoint: coords = points[0]
 
-        context.strokeStyle = paintColor
-        context.lineCap = lineCap
-
-        context.miterLimit = miterLimit
-
-        context.lineWidth = lineWidth
-
         if (points.length > 10) {
           context.beginPath()
           context.arc(firstPoint.x, firstPoint.y, lineWidth / 2, 0, Math.PI * 2)
           context.closePath()
-        }
-
-        //way to handle 4 or way reflection?
-        if (reflectX) {
-          context.translate(innerWidth, 0)
-          context.scale(-1, 1)
-        }
-
-        if (reflectY) {
-          context.translate(0, innerHeight)
-          context.scale(1, -1)
         }
 
         context.beginPath()
@@ -551,30 +565,21 @@ const useCanvasLogic = ({
 
           context.lineTo(end.x, end.y)
 
-          const gradient = context.createLinearGradient(
-            canvasOffsetTop,
-            canvasOffsetLeft,
-            end.x,
-            end.y
-          )
-          gradient.addColorStop(0, "#404ce7")
-          gradient.addColorStop(0.5, "#e4306c80")
-          gradient.addColorStop(0.75, "#e4306cbf")
-          gradient.addColorStop(1, "#ffc74100")
-          context.fillStyle = gradient
-
           context.fill()
           context.closePath()
         }
       }
     }
+
     if (canvasRef.current) {
       const renderContext = canvasRef.current.getContext("2d")
 
       if (renderContext) {
         canvasRef.current.addEventListener("mousedown", handleMouseDown)
         canvasRef.current.addEventListener("mousemove", handleMouseMove)
-        canvasRef.current.addEventListener("mouseup", () => (mouseDown = false))
+        canvasRef.current.addEventListener("mouseup", (): void => {
+          mouseDown = false
+        })
 
         canvasOffsetLeft = canvasRef.current.offsetLeft
         canvasOffsetTop = canvasRef.current.offsetTop

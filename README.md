@@ -6,6 +6,7 @@ https://engineering.datorama.com/mastering-drag-drop-with-reactjs-part-01-39bed3
 https://engineering.datorama.com/mastering-drag-drop-using-reactjs-hooks-fb58dc1f816f
 
 https://fettblog.eu/typescript-react/components/
+https://fettblog.eu/typescript-react/hooks/#useeffect
 
 do a copyright and lame info like that component
 
