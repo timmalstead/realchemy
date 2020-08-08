@@ -14,7 +14,7 @@ export const Tools = styled.main`
   flex-direction: column;
 `
 
-export const ToolHeader = styled.header`
+export const ToolHeader = styled.div`
   position: relative;
   width: 100%;
   height: 1.5em;
@@ -36,7 +36,7 @@ export const CollapseArrow = styled.div`
   cursor: pointer;
 `
 
-export const ToolHolder = styled.section`
+export const ToolHolder = styled.div`
   background-color: ${main};
   width: 100%;
   height: ${props => (props.isCollapsed ? 0 : "23.5em")};

@@ -1,4 +1,4 @@
-import { MutableRefObject } from "react"
+import { MutableRefObject, SetStateAction, Dispatch } from "react"
 import { drawingOptions } from "./objects"
 
 export interface canvasLogic {
@@ -10,7 +10,7 @@ export interface canvasLogic {
 }
 
 export interface appToToolbar {
-  setToolOptions: any
+  setToolOptions: Dispatch<SetStateAction<drawingOptions>>
 }
 
 export interface appToCanvas {

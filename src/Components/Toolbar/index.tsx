@@ -1,5 +1,4 @@
 import React, { FC, ReactElement, useState } from "react"
-//component imports
 import useDrag from "../../hooks/useDrag"
 import { appToToolbar } from "../../types/props"
 import { coords } from "../../types/objects"
@@ -29,7 +28,7 @@ const Toolbar: FC<appToToolbar> = ({
         isDragging={isDragging}
       >
         <CollapseArrow
-          onClick={() => setIsCollapsed(prevState => !prevState)}
+          onClick={() => setIsCollapsed(!isCollapsed)}
           isCollapsed={isCollapsed}
         />
       </ToolHeader>

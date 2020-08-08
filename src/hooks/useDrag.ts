@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, MouseEvent } from "react"
 import { coords, positionParams } from "../types/objects"
 
 const useDrag = (startingPosition: coords) => {
@@ -10,7 +10,10 @@ const useDrag = (startingPosition: coords) => {
     lastTranslation: startingPosition,
   })
 
-  const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
+  const handleMouseDown = ({
+    clientX,
+    clientY,
+  }: MouseEvent<HTMLDivElement>): void => {
     let [translation, lastTranslation]: coords[] = [
       startingPosition,
       startingPosition,
@@ -27,7 +30,10 @@ const useDrag = (startingPosition: coords) => {
     })
   }
 
-  const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
+  const handleMouseMove = ({
+    clientX,
+    clientY,
+  }: MouseEvent<HTMLDivElement>): void => {
     if (dragInfo.isDragging) {
       const { origin, lastTranslation } = dragInfo
       setDragInfo({

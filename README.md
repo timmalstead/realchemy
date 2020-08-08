@@ -5,6 +5,8 @@ https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
 https://engineering.datorama.com/mastering-drag-drop-with-reactjs-part-01-39bed3d40a03
 https://engineering.datorama.com/mastering-drag-drop-using-reactjs-hooks-fb58dc1f816f
 
+https://fettblog.eu/typescript-react/components/
+
 do a copyright and lame info like that component
 
 need to figure out path intersection
