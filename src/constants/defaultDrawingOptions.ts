@@ -1,4 +1,4 @@
-import { drawingOptions } from "../types/objects"
+import { drawingOptions } from "../@types/objects"
 
 const defOpts: drawingOptions = {
   reflectX: true,

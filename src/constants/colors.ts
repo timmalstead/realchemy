@@ -1,4 +1,4 @@
-import { colorPack } from "../types/objects"
+import { colorPack } from "../@types/objects"
 
 const tempSwitch: string = "browser"
 

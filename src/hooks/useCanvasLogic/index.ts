@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import { canvasLogic } from "../../types/props"
-import { coords } from "../../types/objects"
+import { canvasLogic } from "../../@types/props"
+import { coords } from "../../@types/objects"
 
 //#region other drawing logic
 // #region drawing

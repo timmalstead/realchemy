@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useState } from "react"
 import useDrag from "../../hooks/useDrag"
-import { appToToolbar } from "../../types/props"
-import { coords } from "../../types/objects"
+import { appToToolbar } from "../../@types/props"
+import { coords } from "../../@types/objects"
 import { Tools, ToolHeader, CollapseArrow, ToolHolder } from "./style"
 
 const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }

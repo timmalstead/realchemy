@@ -1,6 +1,6 @@
 import React, { FC, ReactElement, useRef } from "react"
 import useCanvasLogic from "../../hooks/useCanvasLogic"
-import { appToCanvas } from "../../types/props"
+import { appToCanvas } from "../../@types/props"
 
 const Canvas: FC<appToCanvas> = ({
   toolOptions,

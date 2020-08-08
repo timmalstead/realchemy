@@ -35,3 +35,6 @@ eyedropper
 key bindings
 stamps
 no doubt lots of other stuff too
+set async/local storage to store drawing on unmount
+
+see about loss on drag speed issue to stack overflow?
