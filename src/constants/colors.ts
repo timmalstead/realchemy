@@ -1,6 +1,11 @@
-import { colorPack } from "../@types/objects"
+import { colorPack, colorDefs } from "../@types/objects"
 
 const tempSwitch: string = "browser"
+
+const drawingColorDefaults: colorDefs = {
+  solidColor: "#000",
+  colorStops: ["#000,#FFF"],
+}
 
 const colorHash: { [environment: string]: colorPack } = {
   iOS: {
@@ -19,6 +24,9 @@ const colorHash: { [environment: string]: colorPack } = {
   },
 }
 
-const colorTheme: colorPack = colorHash[tempSwitch]
+const colorTheme: colorDefs & colorPack = {
+  ...colorHash[tempSwitch],
+  ...drawingColorDefaults,
+}
 
 export default colorTheme

@@ -468,13 +468,13 @@ const useCanvasLogic = ({
       reflectX,
       reflectY,
       isBrush,
+      isEraser,
       isFreehand,
-      isGradient,
+      isClear,
+      isEyedropper,
       lineWidth,
-      lineCap,
-      miterLimit,
-      colorOne,
-      colorTwo,
+      solidOrGrad,
+      solidColor,
       colorStops,
     } = toolOptions
 
@@ -501,8 +501,6 @@ const useCanvasLogic = ({
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown && context) {
         context.strokeStyle = paintColor
-        context.lineCap = lineCap
-        context.miterLimit = miterLimit
         context.lineWidth = lineWidth
 
         const gradient = context.createLinearGradient(
@@ -519,13 +517,10 @@ const useCanvasLogic = ({
 
         context.fillStyle = gradient
 
-        //way to handle 4 or way reflection?
         if (reflectX) {
           context.translate(innerWidth, 0)
           context.scale(-1, 1)
-        }
-
-        if (reflectY) {
+        } else if (reflectY) {
           context.translate(0, innerHeight)
           context.scale(1, -1)
         }

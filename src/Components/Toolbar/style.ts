@@ -39,6 +39,6 @@ export const CollapseArrow = styled.div`
 export const ToolHolder = styled.section`
   background-color: ${main};
   width: 100%;
-  height: ${props => (props.isCollapsed ? 0 : "23.5em")};
+  height: ${props => (props.isCollapsed ? 0 : "13em")};
   transition: height 0.25s linear;
 `

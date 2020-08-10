@@ -1,19 +1,22 @@
 import { drawingOptions } from "../@types/objects"
+import colorTheme from "./colors"
+
+const { solidColor, colorStops } = colorTheme
 
 const defOpts: drawingOptions = localStorage.savedToolOptions
   ? JSON.parse(localStorage.savedToolOptions)
   : {
-      reflectX: true,
-      reflectY: false,
+      reflectX: false,
+      reflectY: true,
       isBrush: false,
+      isEraser: false,
       isFreehand: true,
-      isGradient: true,
+      isClear: false,
+      isEyedropper: false,
       lineWidth: 10,
-      lineCap: "round",
-      miterLimit: 0.01,
-      colorOne: "",
-      colorTwo: "",
-      colorStops: [""],
+      solidOrGrad: "grad",
+      solidColor,
+      colorStops,
     }
 
 export default defOpts

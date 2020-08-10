@@ -4,14 +4,22 @@ export type drawingOptions = {
   reflectX: boolean
   reflectY: boolean
   isBrush: boolean
+  isEraser: boolean
   isFreehand: boolean
-  isGradient: boolean
-  lineWidth: number
-  lineCap: "butt" | "round" | "square"
-  miterLimit: number
-  colorOne: string
-  colorTwo: string
+  isClear: boolean
+  isEyedropper: boolean
+  lineWidth: number | string //for now
+  solidOrGrad: "solid" | "grad"
+  solidColor: string
   colorStops: string[]
+}
+
+export type componentOption = {
+  name: string
+  typeVal: string
+  options: any //for now
+  svg(color: string): SVGElement | string
+  changeAction(prevState: drawingOptions): drawingOptions
 }
 
 export type colorPack = {
@@ -20,6 +28,11 @@ export type colorPack = {
   text: string
   contrastLight: string
   contrastDark: string
+}
+
+export type colorDefs = {
+  solidColor: string
+  colorStops: string[]
 }
 
 export type positionParams = {

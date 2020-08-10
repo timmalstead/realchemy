@@ -10,32 +10,30 @@ https://fettblog.eu/typescript-react/hooks/#useeffect
 
 do a copyright and lame info like that component
 
-need to figure out path intersection
-
-do dynamic import of toolbar mobile or full size based on environment?
-
 okay, so you can do diagonal reflects, will research more how to do that
 
 before we see about native:
 
-shapes
-x and y reflects
-color selections
-clear to three colors
+5 rows of 2em by 2em tool icons might work
+
+path intersection
+
+build out options object and icon
 
 later:
 
+copyright component
+
+opacitys
+miter limit,
+line cap butt round square
 more reflects
-path intersection on shapes
 different toolbars for environments
 dynamic import of toolbars
-erase
-strokes
-grads
-eyedropper
 key bindings
 stamps
 no doubt lots of other stuff too
 set async/local storage to store drawing on unmount
+and to store drawing component options in addition to current stroke/tool options
 
 see about loss on drag speed issue to stack overflow?
