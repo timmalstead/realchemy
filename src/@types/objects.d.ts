@@ -3,12 +3,13 @@ export type coords = { x: number; y: number }
 export type drawingOptions = {
   reflectX: boolean
   reflectY: boolean
+  isClear: boolean
+  lineWidth: number
+  //currentTool : "brush" | "eraser" | "freehand" | "eyedropper"
   isBrush: boolean
   isEraser: boolean
   isFreehand: boolean
-  isClear: boolean
   isEyedropper: boolean
-  lineWidth: number
   solidOrGrad: "solid" | "grad"
   solidColor: string
   colorStops: string[]

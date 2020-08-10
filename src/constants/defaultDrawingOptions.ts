@@ -1,4 +1,5 @@
 import { drawingOptions } from "../@types/objects"
+import { grad } from "./toolTypes"
 import colorTheme from "./colors"
 
 const { solidColor, colorStops } = colorTheme
@@ -14,7 +15,7 @@ const defOpts: drawingOptions = localStorage.savedToolOptions
       isClear: false,
       isEyedropper: false,
       lineWidth: 10,
-      solidOrGrad: "grad",
+      solidOrGrad: grad,
       solidColor,
       colorStops,
     }

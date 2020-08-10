@@ -56,7 +56,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Clear",
-    options: "path intersection, opacity",
+    options: "clear color",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
       ...prevState,
@@ -66,21 +66,21 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Eyedropper",
-    options: "path intersection, opacity",
+    options: "area to poll",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
       ...prevState,
-      isClear: true,
+      isEyedropper: true,
     }),
     //after eye dropper executes, do you want to revert it to previous tool? can you?
   },
   {
     name: "Line Width",
-    options: "path intersection, opacity",
+    options: "width",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
       ...prevState,
-      lineWidth: 10, //this will be a line width value likely accessed in the closure of the tool component
+      lineWidth: 10, //this will be a number value likely accessed in the closure of the tool component
     }),
   },
 ]
