@@ -8,22 +8,19 @@ https://engineering.datorama.com/mastering-drag-drop-using-reactjs-hooks-fb58dc1
 https://fettblog.eu/typescript-react/components/
 https://fettblog.eu/typescript-react/hooks/#useeffect
 
-do a copyright and lame info like that component
-
-okay, so you can do diagonal reflects, will research more how to do that
-
 before we see about native:
 
 5 rows of 2em by 2em tool icons might work
 
 path intersection
 
-build out options object and icon
+build out options objects and icons
 
 later:
 
 copyright component
-
+zoom!
+okay, so you can do diagonal reflects, will research more how to do that
 opacitys
 miter limit,
 line cap butt round square

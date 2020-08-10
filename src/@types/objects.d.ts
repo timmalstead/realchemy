@@ -8,7 +8,7 @@ export type drawingOptions = {
   isFreehand: boolean
   isClear: boolean
   isEyedropper: boolean
-  lineWidth: number | string //for now
+  lineWidth: number
   solidOrGrad: "solid" | "grad"
   solidColor: string
   colorStops: string[]
@@ -16,7 +16,6 @@ export type drawingOptions = {
 
 export type componentOption = {
   name: string
-  typeVal: string
   options: any //for now
   svg(color: string): SVGElement | string
   changeAction(prevState: drawingOptions): drawingOptions

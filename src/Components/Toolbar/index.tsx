@@ -20,6 +20,14 @@ const Toolbar: FC<appToToolbar> = ({
     handleMouseUp,
   } = useDrag(startingPosition)
 
+  const mappedTools: ReactElement[] = toolbarComponentOptions.map(
+    (options: componentOption, i: number): ReactElement => (
+      <Fragment key={i}>
+        <Tool {...options} setToolOptions={setToolOptions} />
+      </Fragment>
+    )
+  )
+
   return (
     <Tools style={toolbarPosition}>
       <ToolHeader
@@ -34,15 +42,7 @@ const Toolbar: FC<appToToolbar> = ({
           isCollapsed={isCollapsed}
         />
       </ToolHeader>
-      <ToolHolder isCollapsed={isCollapsed}>
-        {toolbarComponentOptions.map(
-          (options: componentOption): ReactElement => (
-            <Fragment key={options.name}>
-              <Tool {...options} setToolOptions={setToolOptions} />
-            </Fragment>
-          )
-        )}
-      </ToolHolder>
+      <ToolHolder isCollapsed={isCollapsed}>{mappedTools}</ToolHolder>
     </Tools>
   )
 }

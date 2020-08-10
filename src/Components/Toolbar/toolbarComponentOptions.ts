@@ -3,7 +3,6 @@ import { componentOption } from "../../@types/objects"
 const compOptions: componentOption[] = [
   {
     name: "Reflect X",
-    typeVal: "reflectX",
     options: null,
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -14,7 +13,6 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Reflect Y",
-    typeVal: "reflectY",
     options: null,
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -25,7 +23,6 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Brush",
-    typeVal: "isBrush",
     options: "brush size, brush hardness, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -37,7 +34,6 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Eraser",
-    typeVal: "isEraser",
     options: "eraser size, eraser hardness, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -49,7 +45,6 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Freehand",
-    typeVal: "isFreehand",
     options: "path intersection, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -61,7 +56,6 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Clear",
-    typeVal: "isClear",
     options: "path intersection, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -72,7 +66,6 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Eyedropper",
-    typeVal: "isClear",
     options: "path intersection, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -83,12 +76,11 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Line Width",
-    typeVal: "lineWidth",
     options: "path intersection, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
       ...prevState,
-      lineWidth: "lineWidthValueAccessedThroughClosure",
+      lineWidth: 10, //this will be a line width value likely accessed in the closure of the tool component
     }),
   },
 ]
