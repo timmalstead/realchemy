@@ -4,9 +4,6 @@ import { appToToolbar } from "../../@types/props"
 
 const Tool: FC<componentOption & appToToolbar> = (
   options: componentOption & appToToolbar
-): ReactElement => {
-  console.log(options)
-  return <span>{options.name}</span>
-}
+): ReactElement => <span>{options.name}</span>
 
 export default Tool
