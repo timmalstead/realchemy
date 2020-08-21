@@ -1,11 +1,11 @@
 import React, { FC, ReactElement, useState, useEffect } from "react"
 import Toolbar from "./components/Toolbar"
 import Canvas from "./components/Canvas"
-import defOpts from "./constants/defaultDrawingOptions"
+import initOpts from "./constants/initialDrawingOptions"
 import { drawingOptions } from "./@types/objects"
 
 const App: FC = (): ReactElement => {
-  const [toolOptions, setToolOptions] = useState<drawingOptions>(defOpts)
+  const [toolOptions, setToolOptions] = useState<drawingOptions>(initOpts)
 
   useEffect(() => {
     localStorage.savedToolOptions = JSON.stringify(toolOptions)

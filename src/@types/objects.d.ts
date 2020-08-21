@@ -1,18 +1,20 @@
+export type colorStop = { position: number; color: string }
+
 export type coords = { x: number; y: number }
 
-export type drawingOptions = {
+export type currentTool = "brush" | "eraser" | "freehand" | "eyedropper"
+
+export type solidOrGrad = "solid" | "grad"
+
+export interface drawingOptions {
   reflectX: boolean
   reflectY: boolean
   isClear: boolean
   lineWidth: number
-  //currentTool : "brush" | "eraser" | "freehand" | "eyedropper"
-  isBrush: boolean
-  isEraser: boolean
-  isFreehand: boolean
-  isEyedropper: boolean
-  solidOrGrad: "solid" | "grad"
+  currentTool: currentTool
+  solidOrGrad: solidOrGrad
   solidColor: string
-  colorStops: string[]
+  colorStops: colorStop[]
 }
 
 export type componentOption = {
@@ -30,7 +32,7 @@ export type colorPack = {
 
 export type colorDefs = {
   solidColor: string
-  colorStops: string[]
+  colorStops: colorStop[]
 }
 
 export type supportedEnvironments = "Browser" | "Electron"

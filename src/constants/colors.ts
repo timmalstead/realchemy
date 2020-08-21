@@ -20,7 +20,10 @@ const colorHash: { [environment: string]: colorPack } = {
 
 const drawingColorDefaults: colorDefs = {
   solidColor: "#000",
-  colorStops: ["#000,#fff"],
+  colorStops: [
+    { position: 0, color: "#000000" },
+    { position: 1, color: "#ffffff" },
+  ],
 }
 
 const colorTheme: colorDefs & colorPack = {

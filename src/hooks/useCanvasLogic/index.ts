@@ -1,6 +1,16 @@
 import { useState, useEffect } from "react"
+import setGradient from "./setGradient"
+import drawingLoop from "./drawingLoop"
 import { canvasLogic } from "../../@types/props"
 import { coords } from "../../@types/objects"
+import {
+  brush,
+  eraser,
+  freehand,
+  eyedropper,
+  grad,
+  solid,
+} from "../../constants/toolTypes"
 
 //#region other drawing logic
 // #region drawing
@@ -467,18 +477,13 @@ const useCanvasLogic = ({
     const {
       reflectX,
       reflectY,
-      isBrush,
-      isEraser,
-      isFreehand,
       isClear,
-      isEyedropper,
       lineWidth,
+      currentTool,
       solidOrGrad,
       solidColor,
       colorStops,
     } = toolOptions
-
-    const paintColor: string = "#FF0000"
 
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       if (context) {
@@ -500,22 +505,21 @@ const useCanvasLogic = ({
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown && context) {
-        context.strokeStyle = paintColor
-        context.lineWidth = lineWidth
-
-        const gradient = context.createLinearGradient(
-          canvasOffsetTop,
-          canvasOffsetLeft,
-          end.x,
-          end.y
-        )
-
-        gradient.addColorStop(0, "#404ce7")
-        gradient.addColorStop(0.5, "#e4306c80")
-        gradient.addColorStop(0.75, "#e4306cbf")
-        gradient.addColorStop(1, "#ffc74100")
-
-        context.fillStyle = gradient
+        if (currentTool === brush || currentTool === eraser) {
+          if (solidOrGrad === solid) context.strokeStyle = solidColor
+          // TODO: Set grad stroke
+          context.lineWidth = lineWidth
+        } else if (currentTool === freehand) {
+          if (solidOrGrad === solid) context.fillStyle = solidColor
+          else if (solidOrGrad === grad)
+            context.fillStyle = setGradient(
+              canvasOffsetLeft,
+              canvasOffsetTop,
+              end,
+              context,
+              colorStops
+            )
+        }
 
         if (reflectX) {
           context.translate(innerWidth, 0)
@@ -536,6 +540,8 @@ const useCanvasLogic = ({
         }
 
         points.push(start)
+
+        // drawingLoop(context, points, lineWidth)
 
         const firstPoint: coords = points[0]
 
@@ -559,10 +565,11 @@ const useCanvasLogic = ({
           }
 
           context.lineTo(end.x, end.y)
-
-          context.fill()
-          context.closePath()
         }
+        //will have to pass above into drawing loop
+        if (currentTool === brush || currentTool === eraser) context.stroke()
+        if (currentTool === freehand) context.fill()
+        context.closePath()
       }
     }
 

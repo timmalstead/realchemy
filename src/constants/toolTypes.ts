@@ -1,7 +1,9 @@
-export const brush: string = "brush"
-export const eraser: string = "eraser"
-export const freehand: string = "freehand"
-export const eyedropper: string = "eyedropper"
+import { currentTool, solidOrGrad } from "../@types/objects"
 
-export const grad: string = "grad"
-export const solid: string = "solid"
+export const brush: currentTool = "brush"
+export const eraser: currentTool = "eraser"
+export const freehand: currentTool = "freehand"
+export const eyedropper: currentTool = "eyedropper"
+
+export const grad: solidOrGrad = "grad"
+export const solid: solidOrGrad = "solid"
