@@ -37,7 +37,6 @@ const config = {
   devServer: {
     contentBase: "./public",
     hot: true,
-    open: true,
     port: 3000,
   },
   plugins:
