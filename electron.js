@@ -16,7 +16,7 @@ if (
 )
   dev = true
 
-// Temporary fix for broken high-dpi scale factor on Windows (125% scaling)
+// Fix for broken high-dpi scale factor on Windows (125% scaling)
 // info: https://github.com/electron/electron/issues/9691
 if (process.platform === "win32") {
   app.commandLine.appendSwitch("high-dpi-support", "true")
@@ -32,11 +32,10 @@ const createWindow = () => {
   })
   mainWindow.maximize()
 
-  // and load the index.html of the app.
+  // Load the index.html of the app.
   let indexPath
 
   // Determine the correct index.html file
-  // (created by webpack) to load in dev and production
   if (dev && process.argv.indexOf("--noDevServer") === -1) {
     indexPath = url.format({
       protocol: "http:",
@@ -56,14 +55,7 @@ const createWindow = () => {
   mainWindow.loadURL(indexPath)
 
   // Don't show the app window until it is ready and loaded
-  mainWindow.once("ready-to-show", () => {
-    mainWindow.show()
-
-    // Open the DevTools automatically if developing
-    if (dev) {
-      mainWindow.webContents.openDevTools()
-    }
-  })
+  mainWindow.once("ready-to-show", () => mainWindow.show())
 
   // Emitted when the window is closed.
   mainWindow.on("closed", () => {
@@ -74,24 +66,16 @@ const createWindow = () => {
   })
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
+// This method will be called when Electron has finished.
 // Some APIs can only be used after this event occurs.
 app.on("ready", createWindow)
 
-// Quit when all windows are closed.
+// Quit when all windows are closed unless macOs
 app.on("window-all-closed", () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== "darwin") {
-    app.quit()
-  }
+  if (process.platform !== "darwin") app.quit()
 })
 
+// Recreate on dock icon click if macOs
 app.on("activate", () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
-  }
+  if (mainWindow === null) createWindow()
 })

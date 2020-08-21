@@ -1,6 +1,15 @@
 {
   "name": "realchemy",
+  "description": "Semi-random drawing app using React and the HTML5 canvas api",
+  "coypright": "©2020 Timothy Malstead -- this software may not be copied or modified, in whole or in part without express and explicit permission from owner (Timothy Malstead)",
   "version": "1.0.0",
+  "private": true,
+  "homepage": "https://github.com/timmalstead/realchemy.git",
+  "author": {
+    "name": "Timothy Malstead",
+    "email": "timmalstead@gmail.com",
+    "url": "https://www.timmalstead.com/"
+  },
   "main": "electron.js",
   "scripts": {
     "start": "webpack-dev-server -d --open",
@@ -15,8 +24,6 @@
     "electron": "concurrently --kill-others-on-fail --kill-others 'webpack-dev-server -d' 'wait-on http://localhost:3000 && electron .'",
     "electron_prod": "electron . --noDevServer"
   },
-  "author": "Timothy Malstead timmalstead@gmail.com",
-  "coypright": "©2020 Timothy Malstead -- this software may not be copied or modified, in whole or in part without express and explicit permission from owner (Timothy Malstead)",
   "dependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
