@@ -541,32 +541,8 @@ const useCanvasLogic = ({
 
         points.push(start)
 
-        // drawingLoop(context, points, lineWidth)
+        drawingLoop(context, end, points, lineWidth)
 
-        const firstPoint: coords = points[0]
-
-        if (points.length > 10) {
-          context.beginPath()
-          context.arc(firstPoint.x, firstPoint.y, lineWidth / 2, 0, Math.PI * 2)
-          context.closePath()
-        }
-
-        context.beginPath()
-        context.moveTo(firstPoint.x, firstPoint.y)
-
-        const loopLength: number = points.length
-        if (loopLength) {
-          for (let i = 1; i < loopLength - 2; i++) {
-            const bezierX: number = points[i].x
-            const bezierY: number = points[i].y
-            const endX: number = (bezierX + points[i].x) / 2
-            const endY: number = (bezierY + points[i].y) / 2
-            context.quadraticCurveTo(bezierX, bezierY, endX, endY)
-          }
-
-          context.lineTo(end.x, end.y)
-        }
-        //will have to pass above into drawing loop
         if (currentTool === brush || currentTool === eraser) context.stroke()
         if (currentTool === freehand) context.fill()
         context.closePath()
@@ -579,9 +555,10 @@ const useCanvasLogic = ({
       if (renderContext) {
         canvasRef.current.addEventListener("mousedown", handleMouseDown)
         canvasRef.current.addEventListener("mousemove", handleMouseMove)
-        canvasRef.current.addEventListener("mouseup", (): void => {
-          mouseDown = false
-        })
+        canvasRef.current.addEventListener(
+          "mouseup",
+          (): boolean => (mouseDown = false)
+        )
 
         canvasOffsetLeft = canvasRef.current.offsetLeft
         canvasOffsetTop = canvasRef.current.offsetTop

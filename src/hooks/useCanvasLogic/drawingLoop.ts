@@ -2,6 +2,7 @@ import { coords } from "../../@types/objects"
 
 const drawingLoop = (
   context: CanvasRenderingContext2D,
+  end: coords,
   points: coords[],
   lineWidth: number
 ): void => {
@@ -17,7 +18,7 @@ const drawingLoop = (
   context.moveTo(firstPoint.x, firstPoint.y)
 
   const loopLength: number = points.length
-  if (loopLength)
+  if (loopLength) {
     for (let i = 1; i < loopLength - 2; i++) {
       const bezierX: number = points[i].x
       const bezierY: number = points[i].y
@@ -25,6 +26,9 @@ const drawingLoop = (
       const endY: number = (bezierY + points[i].y) / 2
       context.quadraticCurveTo(bezierX, bezierY, endX, endY)
     }
+
+    context.lineTo(end.x, end.y)
+  }
 }
 
 export default drawingLoop
