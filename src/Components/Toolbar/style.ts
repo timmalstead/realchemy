@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import colorTheme from "../../constants/colors"
 
-const { main, dark, text } = colorTheme
+const { main, dark, light } = colorTheme
 
 export const Tools = styled.main`
   width: 4em;
@@ -30,7 +30,7 @@ export const CollapseArrow = styled.div`
   width: 0;
   border-left: 0.4em solid transparent;
   border-right: 0.4em solid transparent;
-  border-top: 0.4em solid ${text};
+  border-top: 0.4em solid ${light};
   transform: ${props => (props.isCollapsed ? "rotate(90deg)" : null)};
   transition: transform 0.25s linear;
   cursor: pointer;

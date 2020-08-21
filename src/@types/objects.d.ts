@@ -25,15 +25,15 @@ export type componentOption = {
 export type colorPack = {
   main: string
   dark: string
-  text: string
-  contrastLight: string
-  contrastDark: string
+  light: string
 }
 
 export type colorDefs = {
   solidColor: string
   colorStops: string[]
 }
+
+export type supportedEnvironments = "Browser" | "Electron"
 
 export type positionParams = {
   isDragging: boolean

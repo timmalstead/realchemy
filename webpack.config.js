@@ -1,5 +1,4 @@
 //gotta figure out splitting for production better though
-
 const CompressionPlugin = require("compression-webpack-plugin")
 const zopfli = require("@gfx/zopfli")
 
