@@ -494,10 +494,7 @@ const useCanvasLogic = ({
           y: clientY - canvasOffsetTop,
         }
 
-        end = {
-          x: clientX - canvasOffsetLeft,
-          y: clientY - canvasOffsetTop,
-        }
+        end = start
 
         mouseDown = true
       }
@@ -507,7 +504,14 @@ const useCanvasLogic = ({
       if (mouseDown && context) {
         if (currentTool === brush || currentTool === eraser) {
           if (solidOrGrad === solid) context.strokeStyle = solidColor
-          // TODO: Set grad stroke
+          else if (solidOrGrad === grad)
+            context.strokeStyle = setGradient(
+              canvasOffsetLeft,
+              canvasOffsetTop,
+              end,
+              context,
+              colorStops
+            )
           context.lineWidth = lineWidth
         } else if (currentTool === freehand) {
           if (solidOrGrad === solid) context.fillStyle = solidColor
@@ -539,9 +543,7 @@ const useCanvasLogic = ({
           y: clientY + canvasOffsetTop,
         }
 
-        points.push(start)
-
-        drawingLoop(context, end, points, lineWidth)
+        drawingLoop(context, start, end, points, lineWidth)
 
         if (currentTool === brush || currentTool === eraser) context.stroke()
         if (currentTool === freehand) context.fill()

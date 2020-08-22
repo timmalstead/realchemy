@@ -2,10 +2,13 @@ import { coords } from "../../@types/objects"
 
 const drawingLoop = (
   context: CanvasRenderingContext2D,
+  start: coords,
   end: coords,
   points: coords[],
   lineWidth: number
 ): void => {
+  points.push(start)
+
   const firstPoint: coords = points[0]
 
   if (points.length > 10) {
