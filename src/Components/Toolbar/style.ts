@@ -12,6 +12,7 @@ export const Tools = styled.main`
   display: flex;
   flex-direction: column;
 `
+Tools.displayName = "Tools"
 
 export const ToolHeader = styled.header`
   position: relative;
@@ -24,6 +25,7 @@ export const ToolHeader = styled.header`
   justify-content: flex-end;
   padding: 0.5em 0.33em;
 `
+ToolHeader.displayName = "ToolHeader"
 
 export const CollapseArrow = styled.div`
   height: 0;
@@ -35,6 +37,7 @@ export const CollapseArrow = styled.div`
   transition: transform 0.25s linear;
   cursor: pointer;
 `
+CollapseArrow.displayName = "CollapseArrow"
 
 export const ToolHolder = styled.section`
   background-color: ${main};
@@ -46,3 +49,4 @@ export const ToolHolder = styled.section`
   border-radius: 0 0 0.25em 0.25em;
   flex-wrap: wrap;
 `
+ToolHolder.displayName = "ToolHolder"

@@ -10,7 +10,6 @@ const Tool: FC<componentOption & toolbarToTool> = ({
   isCollapsed,
 }: componentOption & toolbarToTool): ReactElement => {
   const [nameModal, showNameModal] = useState<boolean>(false)
-  const [isToolSelected, setIsToolSelected] = useState<boolean>(false)
 
   useEffect(() => () => clearTimeout(timeout), [])
 
@@ -30,9 +29,7 @@ const Tool: FC<componentOption & toolbarToTool> = ({
     <ToolSquare
       onMouseEnter={startCountdown}
       onMouseLeave={clearCountdown}
-      onClick={prevState => setIsToolSelected(!prevState)}
       tabIndex={tabIndex}
-      isToolSelected={isToolSelected}
     >
       {nameModal ? <NamePopUp>{name}</NamePopUp> : null}
       <span>{name.slice(0, 2)}</span>

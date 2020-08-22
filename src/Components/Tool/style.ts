@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import colorTheme from "../../constants/colors"
 
-const { main, dark, light } = colorTheme
+const { main, light } = colorTheme
 
-const ToolSquare = styled.div`
+export const ToolSquare = styled.div`
   position: relative;
   width: 50%;
   height: 25%;
@@ -13,24 +13,24 @@ const ToolSquare = styled.div`
   align-items: center;
   user-select: none;
   cursor: default;
+  box-shadow: inset 0.25em 0.25em ${main}, inset -0.25em -0.25em ${main};
 
   :focus,
   :hover {
-    /* will do this with a boolean so it will be darker when tool is active and probably a blend mode as well, may be pure programattically to keep focus on elements when doing a stroke*/
     box-shadow: inset 0.25em 0.25em ${main}, inset -0.25em -0.25em ${main},
       inset 0.3em 0.3em ${light}88, inset -0.3em -0.3em ${light}88;
-    background-color: ${dark}88;
     outline: none;
   }
 `
+ToolSquare.displayName = "ToolSquare"
 
-const NamePopUp = styled.span`
+export const NamePopUp = styled.span`
   position: absolute;
+  z-index: 1;
   white-space: nowrap;
   padding: 0.5em;
   color: ${main};
   background-color: ${light};
   top: -1.5em;
 `
-
-export { ToolSquare, NamePopUp }
+NamePopUp.displayName = "NamePopUp"
