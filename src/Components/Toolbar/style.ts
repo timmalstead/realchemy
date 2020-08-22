@@ -18,7 +18,7 @@ export const ToolHeader = styled.header`
   width: 100%;
   height: 1.5em;
   background-color: ${dark};
-  cursor: ${props => (props.isDragging ? "grabbing" : "grab")};
+  cursor: ${({ isDragging }) => (isDragging ? "grabbing" : "grab")};
   display: flex;
   border-radius: 0.25em 0.25em 0 0;
   justify-content: flex-end;
@@ -31,7 +31,7 @@ export const CollapseArrow = styled.div`
   border-left: 0.4em solid transparent;
   border-right: 0.4em solid transparent;
   border-top: 0.4em solid ${light};
-  transform: ${props => (props.isCollapsed ? "rotate(90deg)" : null)};
+  transform: ${({ isCollapsed }) => (isCollapsed ? "rotate(90deg)" : null)};
   transition: transform 0.25s linear;
   cursor: pointer;
 `
@@ -39,8 +39,8 @@ export const CollapseArrow = styled.div`
 export const ToolHolder = styled.section`
   background-color: ${main};
   width: 100%;
-  height: ${props => (props.isCollapsed ? 0 : "11em")};
-  color: ${props => (props.isCollapsed ? "transparent" : light)};
+  height: ${({ isCollapsed }) => (isCollapsed ? 0 : "11em")};
+  color: ${({ isCollapsed }) => (isCollapsed ? "transparent" : light)};
   transition: height 0.25s linear;
   display: flex;
   border-radius: 0 0 0.25em 0.25em;

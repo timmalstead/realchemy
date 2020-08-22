@@ -495,7 +495,6 @@ const useCanvasLogic = ({
         }
 
         end = start
-
         mouseDown = true
       }
     }
