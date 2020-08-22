@@ -502,28 +502,50 @@ const useCanvasLogic = ({
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown && context) {
-        if (currentTool === brush || currentTool === eraser) {
-          if (solidOrGrad === solid) context.strokeStyle = solidColor
-          else if (solidOrGrad === grad)
-            context.strokeStyle = setGradient(
-              canvasOffsetLeft,
-              canvasOffsetTop,
-              end,
-              context,
-              colorStops
-            )
+        if (currentTool === brush || currentTool === eraser)
           context.lineWidth = lineWidth
-        } else if (currentTool === freehand) {
-          if (solidOrGrad === solid) context.fillStyle = solidColor
-          else if (solidOrGrad === grad)
-            context.fillStyle = setGradient(
-              canvasOffsetLeft,
-              canvasOffsetTop,
-              end,
-              context,
-              colorStops
-            )
+
+        if (solidOrGrad === solid) {
+          if (currentTool === brush || currentTool === eraser)
+            context.strokeStyle = solidColor
+          else if (currentTool === freehand) context.fillStyle = solidColor
         }
+
+        if (solidOrGrad === grad) {
+          const gradient = setGradient(
+            canvasOffsetLeft,
+            canvasOffsetTop,
+            end,
+            context,
+            colorStops
+          )
+          if (currentTool === brush || currentTool === eraser)
+            context.strokeStyle = gradient
+          else if (currentTool === freehand) context.fillStyle = gradient
+        }
+
+        // if (currentTool === brush || currentTool === eraser) {
+        //   if (solidOrGrad === solid) context.strokeStyle = solidColor
+        //   else if (solidOrGrad === grad)
+        //     context.strokeStyle = setGradient(
+        //       canvasOffsetLeft,
+        //       canvasOffsetTop,
+        //       end,
+        //       context,
+        //       colorStops
+        //     )
+        //   context.lineWidth = lineWidth
+        // } else if (currentTool === freehand) {
+        //   if (solidOrGrad === solid) context.fillStyle = solidColor
+        //   else if (solidOrGrad === grad)
+        //     context.fillStyle = setGradient(
+        //       canvasOffsetLeft,
+        //       canvasOffsetTop,
+        //       end,
+        //       context,
+        //       colorStops
+        //     )
+        // }
 
         if (reflectX) {
           context.translate(innerWidth, 0)
