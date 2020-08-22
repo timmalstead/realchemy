@@ -1,4 +1,4 @@
-import { currentTool, solidOrGrad } from "../@types/objects"
+import { currentTool, solidOrGrad } from "../@types/literals"
 
 export const brush: currentTool = "brush"
 export const eraser: currentTool = "eraser"

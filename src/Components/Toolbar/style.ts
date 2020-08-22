@@ -4,11 +4,10 @@ import colorTheme from "../../constants/colors"
 const { main, dark, light } = colorTheme
 
 export const Tools = styled.main`
-  width: 4em;
+  width: 5.25em;
   position: absolute;
   z-index: 1;
   border-radius: 0.25em;
-  overflow: hidden;
   box-shadow: -0.075em 0.075em 0.45em ${main};
   display: flex;
   flex-direction: column;
@@ -21,6 +20,7 @@ export const ToolHeader = styled.header`
   background-color: ${dark};
   cursor: ${props => (props.isDragging ? "grabbing" : "grab")};
   display: flex;
+  border-radius: 0.25em 0.25em 0 0;
   justify-content: flex-end;
   padding: 0.5em 0.33em;
 `
@@ -39,6 +39,10 @@ export const CollapseArrow = styled.div`
 export const ToolHolder = styled.section`
   background-color: ${main};
   width: 100%;
-  height: ${props => (props.isCollapsed ? 0 : "13em")};
+  height: ${props => (props.isCollapsed ? 0 : "11em")};
+  color: ${props => (props.isCollapsed ? "transparent" : light)};
   transition: height 0.25s linear;
+  display: flex;
+  border-radius: 0 0 0.25em 0.25em;
+  flex-wrap: wrap;
 `

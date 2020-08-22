@@ -1,8 +1,10 @@
 import { componentOption } from "../../@types/objects"
+import { brush, eraser, freehand, eyedropper } from "../../constants/toolTypes"
 
 const compOptions: componentOption[] = [
   {
     name: "Reflect X",
+    tabIndex: 1,
     options: null,
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -13,6 +15,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Reflect Y",
+    tabIndex: 2,
     options: null,
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -23,39 +26,48 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Brush",
+    tabIndex: 3,
     options: "brush size, brush hardness, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
       ...prevState,
-      isBrush: true,
-      isEraser: false,
-      isFreehand: false,
+      currentTool: brush,
     }),
   },
   {
     name: "Eraser",
+    tabIndex: 4,
     options: "eraser size, eraser hardness, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
       ...prevState,
-      isBrush: false,
-      isEraser: true,
-      isFreehand: false,
+      currentTool: eraser,
     }),
   },
   {
     name: "Freehand",
+    tabIndex: 5,
     options: "path intersection, opacity",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
       ...prevState,
-      isBrush: false,
-      isEraser: false,
-      isFreehand: true,
+      currentTool: freehand,
     }),
   },
   {
+    name: "Eyedropper",
+    tabIndex: 6,
+    options: "area to poll",
+    svg: color => "svg as function with a color argument",
+    changeAction: prevState => ({
+      ...prevState,
+      currentTool: eyedropper,
+    }),
+    //after eye dropper executes, do you want to revert it to previous tool? can you?
+  },
+  {
     name: "Clear",
+    tabIndex: 7,
     options: "clear color",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -65,17 +77,8 @@ const compOptions: componentOption[] = [
     //what's the best way to turn off clear when done?
   },
   {
-    name: "Eyedropper",
-    options: "area to poll",
-    svg: color => "svg as function with a color argument",
-    changeAction: prevState => ({
-      ...prevState,
-      isEyedropper: true,
-    }),
-    //after eye dropper executes, do you want to revert it to previous tool? can you?
-  },
-  {
     name: "Line Width",
+    tabIndex: 8,
     options: "width",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({

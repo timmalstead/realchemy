@@ -1,12 +1,10 @@
+import { currentTool, solidOrGrad } from "./literals"
+
 export type colorStop = { position: number; color: string }
 
 export type coords = { x: number; y: number }
 
-export type currentTool = "brush" | "eraser" | "freehand" | "eyedropper"
-
-export type solidOrGrad = "solid" | "grad"
-
-export interface drawingOptions {
+export type drawingOptions = {
   reflectX: boolean
   reflectY: boolean
   isClear: boolean
@@ -19,8 +17,9 @@ export interface drawingOptions {
 
 export type componentOption = {
   name: string
+  tabIndex: number
   options: any //for now
-  svg(color: string): SVGElement | string
+  svg(color: string): SVGElement | string // or string for now
   changeAction(prevState: drawingOptions): drawingOptions
 }
 
@@ -34,8 +33,6 @@ export type colorDefs = {
   solidColor: string
   colorStops: colorStop[]
 }
-
-export type supportedEnvironments = "Browser" | "Electron"
 
 export type positionParams = {
   isDragging: boolean

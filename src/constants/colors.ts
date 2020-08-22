@@ -1,4 +1,5 @@
-import { colorPack, colorDefs, supportedEnvironments } from "../@types/objects"
+import { colorPack, colorDefs } from "../@types/objects"
+import { supportedEnvironments } from "../@types/literals"
 import isElectron from "./isElectron"
 
 const currentEnvironment: supportedEnvironments = isElectron

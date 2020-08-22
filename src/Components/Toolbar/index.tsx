@@ -23,7 +23,11 @@ const Toolbar: FC<appToToolbar> = ({
   const mappedTools: ReactElement[] = toolbarComponentOptions.map(
     (options: componentOption, i: number): ReactElement => (
       <Fragment key={i}>
-        <Tool {...options} setToolOptions={setToolOptions} />
+        <Tool
+          {...options}
+          setToolOptions={setToolOptions}
+          isCollapsed={isCollapsed}
+        />
       </Fragment>
     )
   )

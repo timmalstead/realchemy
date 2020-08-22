@@ -16,3 +16,7 @@ export interface appToToolbar {
 export interface appToCanvas {
   toolOptions: drawingOptions
 }
+
+export interface toolbarToTool extends appToToolbar {
+  isCollapsed: boolean
+}
