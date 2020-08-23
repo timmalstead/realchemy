@@ -24,7 +24,7 @@ const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }
 const Toolbar: FC<appToToolbar> = ({
   setToolOptions,
 }: appToToolbar): ReactElement => {
-  const [toolbarState, dispatchToolbarState] = useReducer<
+  const [toolbarStateObject, dispatchToolbarState] = useReducer<
     Reducer<toolbarState, toolbarStateAction>
   >(toolbarStateReducer, initialToolbarState)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
@@ -43,6 +43,8 @@ const Toolbar: FC<appToToolbar> = ({
           {...options}
           setToolOptions={setToolOptions}
           isCollapsed={isCollapsed}
+          toolbarStateObject={toolbarStateObject}
+          dispatchToolbarState={dispatchToolbarState}
         />
       </Fragment>
     )

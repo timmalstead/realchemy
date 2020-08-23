@@ -8,7 +8,7 @@ const initOpts: drawingOptions = localStorage.savedToolOptions
   ? JSON.parse(localStorage.savedToolOptions)
   : {
       reflectX: false,
-      reflectY: true,
+      reflectY: false,
       isClear: false,
       lineWidth: 10,
       currentTool: freehand,

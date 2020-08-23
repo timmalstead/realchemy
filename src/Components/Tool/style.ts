@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import colorTheme from "../../constants/colors"
 
-const { main, light } = colorTheme
+const { main, dark, light } = colorTheme
 
 export const ToolSquare = styled.div`
   position: relative;
@@ -13,6 +13,7 @@ export const ToolSquare = styled.div`
   align-items: center;
   user-select: none;
   cursor: default;
+  background-color: ${({ isToolSelected }) => (isToolSelected ? dark : main)};
   box-shadow: inset 0.25em 0.25em ${main}, inset -0.25em -0.25em ${main};
 
   :focus,

@@ -1,5 +1,5 @@
 import { MutableRefObject, SetStateAction, Dispatch } from "react"
-import { drawingOptions } from "./objects"
+import { drawingOptions, toolbarState, toolbarStateAction } from "./objects"
 
 export interface canvasLogic {
   innerWidth: number
@@ -19,4 +19,6 @@ export interface appToCanvas {
 
 export interface toolbarToTool extends appToToolbar {
   isCollapsed: boolean
+  toolbarStateObject: toolbarState
+  dispatchToolbarState: Dispatch<toolbarStateAction>
 }
