@@ -10,7 +10,9 @@ import {
 } from "../../constants/toolbarReducerTypes"
 import { toolbarState, toolbarStateAction } from "../../@types/objects"
 
-export const initialToolbarState: toolbarState = {
+export const initialToolbarState: toolbarState = JSON.parse(
+  localStorage.toolbarState
+) || {
   REFLECT_X: false,
   REFLECT_Y: false,
   BRUSH: false,

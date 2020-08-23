@@ -9,7 +9,7 @@ import React, {
 import toolbarStateReducer, { initialToolbarState } from "./toolbarStateReducer"
 import Tool from "../Tool"
 import toolbarComponentOptions from "../Tool/toolComponentOptions"
-import useDrag from "../../hooks/useDrag"
+import { useDrag, useLocalStorageOnUnload } from "../../hooks/"
 import { appToToolbar } from "../../@types/props"
 import {
   coords,
@@ -27,7 +27,17 @@ const Toolbar: FC<appToToolbar> = ({
   const [toolbarStateObject, dispatchToolbarState] = useReducer<
     Reducer<toolbarState, toolbarStateAction>
   >(toolbarStateReducer, initialToolbarState)
+
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
+
+  // useEffect(() => {
+  //   const setToolbarStateOnTabClose = (): void => {
+  //     localStorage.toolbarState = JSON.stringify(toolbarStateObject)
+  //   }
+
+  //   window.addEventListener("unload", setToolbarStateOnTabClose)
+  // }, [toolbarStateObject])
+
   const {
     isDragging,
     toolbarPosition,
@@ -35,6 +45,8 @@ const Toolbar: FC<appToToolbar> = ({
     handleMouseMove,
     handleMouseUp,
   } = useDrag(startingPosition)
+
+  useLocalStorageOnUnload("toolbarState", toolbarStateObject)
 
   const mappedTools: ReactElement[] = toolbarComponentOptions.map(
     (options: componentOption, i: number): ReactElement => (

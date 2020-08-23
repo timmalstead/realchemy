@@ -7,13 +7,14 @@ import { toolbarReducerTypes } from "../../@types/literals"
 const Tool: FC<componentOption & toolbarToTool> = ({
   name,
   reducerType,
-  tabIndex,
   setToolOptions,
   isCollapsed,
   toolbarStateObject,
   dispatchToolbarState,
 }: componentOption & toolbarToTool): ReactElement => {
   const [nameModal, showNameModal] = useState<boolean>(false)
+
+  const reducerSelection: toolbarReducerTypes = reducerType as toolbarReducerTypes
 
   let timeout: number
 
@@ -27,15 +28,17 @@ const Tool: FC<componentOption & toolbarToTool> = ({
     showNameModal(false)
   }
 
+  const handleToolClick = () => {
+    clearTimeout(timeout)
+    dispatchToolbarState({ type: reducerSelection })
+  }
+
   return (
     <ToolSquare
       onMouseEnter={startCountdown}
       onMouseLeave={clearCountdown}
-      onClick={() =>
-        dispatchToolbarState({ type: reducerType as toolbarReducerTypes })
-      }
-      tabIndex={tabIndex}
-      isToolSelected={toolbarStateObject[reducerType as toolbarReducerTypes]}
+      onClick={handleToolClick}
+      isToolSelected={toolbarStateObject[reducerSelection]}
     >
       {nameModal ? <NamePopUp>{name}</NamePopUp> : null}
       <span>{name.slice(0, 2)}</span>

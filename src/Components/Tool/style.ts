@@ -16,7 +16,6 @@ export const ToolSquare = styled.div`
   background-color: ${({ isToolSelected }) => (isToolSelected ? dark : main)};
   box-shadow: inset 0.25em 0.25em ${main}, inset -0.25em -0.25em ${main};
 
-  :focus,
   :hover {
     box-shadow: inset 0.25em 0.25em ${main}, inset -0.25em -0.25em ${main},
       inset 0.3em 0.3em ${light}88, inset -0.3em -0.3em ${light}88;
@@ -26,12 +25,13 @@ export const ToolSquare = styled.div`
 ToolSquare.displayName = "ToolSquare"
 
 export const NamePopUp = styled.span`
+  text-align: center;
   position: absolute;
   z-index: 1;
   white-space: nowrap;
   padding: 0.5em;
   color: ${main};
   background-color: ${light};
-  top: -1.5em;
+  top: -2em;
 `
 NamePopUp.displayName = "NamePopUp"

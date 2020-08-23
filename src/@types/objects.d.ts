@@ -18,7 +18,6 @@ export type drawingOptions = {
 export type componentOption = {
   name: string
   reducerType: string
-  tabIndex: number
   options: any //for now
   svg(color: string): SVGElement | string // or string for now
   changeAction(prevState: drawingOptions): drawingOptions
