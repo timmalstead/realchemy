@@ -4,6 +4,7 @@ import { brush, eraser, freehand, eyedropper } from "../../constants/toolTypes"
 const compOptions: componentOption[] = [
   {
     name: "Reflect X",
+    reducerType: "REFLECT_X",
     tabIndex: 1,
     options: null,
     svg: color => "svg as function with a color argument",
@@ -15,6 +16,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Reflect Y",
+    reducerType: "REFLECT_Y",
     tabIndex: 2,
     options: null,
     svg: color => "svg as function with a color argument",
@@ -26,6 +28,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Brush",
+    reducerType: "BRUSH",
     tabIndex: 3,
     options: "brush size, brush hardness, opacity",
     svg: color => "svg as function with a color argument",
@@ -36,6 +39,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Eraser",
+    reducerType: "ERASER",
     tabIndex: 4,
     options: "eraser size, eraser hardness, opacity",
     svg: color => "svg as function with a color argument",
@@ -46,6 +50,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Freehand",
+    reducerType: "FREEHAND",
     tabIndex: 5,
     options: "path intersection, opacity",
     svg: color => "svg as function with a color argument",
@@ -56,6 +61,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Eyedropper",
+    reducerType: "EYEDROPPER",
     tabIndex: 6,
     options: "area to poll",
     svg: color => "svg as function with a color argument",
@@ -67,6 +73,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Clear",
+    reducerType: "CLEAR",
     tabIndex: 7,
     options: "clear color",
     svg: color => "svg as function with a color argument",
@@ -78,6 +85,7 @@ const compOptions: componentOption[] = [
   },
   {
     name: "Line Width",
+    reducerType: "LINE_WIDTH",
     tabIndex: 8,
     options: "width",
     svg: color => "svg as function with a color argument",

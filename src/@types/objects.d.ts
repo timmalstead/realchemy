@@ -1,4 +1,4 @@
-import { currentTool, solidOrGrad } from "./literals"
+import { currentTool, solidOrGrad, toolbarReducerTypes } from "./literals"
 
 export type colorStop = { position: number; color: string }
 
@@ -17,6 +17,7 @@ export type drawingOptions = {
 
 export type componentOption = {
   name: string
+  reducerType: string
   tabIndex: number
   options: any //for now
   svg(color: string): SVGElement | string // or string for now
@@ -39,4 +40,17 @@ export type positionParams = {
   origin: coords
   translation: coords
   lastTranslation: coords
+}
+
+export type toolbarStateAction = { type: toolbarReducerTypes }
+
+export type toolbarState = {
+  REFLECT_X: boolean
+  REFLECT_Y: boolean
+  BRUSH: boolean
+  ERASER: boolean
+  FREEHAND: boolean
+  EYEDROPPER: boolean
+  CLEAR: boolean
+  LINE_WIDTH: boolean
 }

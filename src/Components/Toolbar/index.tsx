@@ -1,9 +1,22 @@
-import React, { FC, ReactElement, useState, Fragment } from "react"
+import React, {
+  FC,
+  ReactElement,
+  useState,
+  useReducer,
+  Reducer,
+  Fragment,
+} from "react"
+import toolbarStateReducer, { initialToolbarState } from "./toolbarStateReducer"
 import Tool from "../Tool"
-import toolbarComponentOptions from "./toolbarComponentOptions"
+import toolbarComponentOptions from "../Tool/toolComponentOptions"
 import useDrag from "../../hooks/useDrag"
 import { appToToolbar } from "../../@types/props"
-import { coords, componentOption } from "../../@types/objects"
+import {
+  coords,
+  componentOption,
+  toolbarState,
+  toolbarStateAction,
+} from "../../@types/objects"
 import { Tools, ToolHeader, CollapseArrow, ToolHolder } from "./style"
 
 const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }
@@ -11,6 +24,9 @@ const startingPosition: coords = { x: window.innerWidth - 100, y: 25 }
 const Toolbar: FC<appToToolbar> = ({
   setToolOptions,
 }: appToToolbar): ReactElement => {
+  const [toolbarState, dispatchToolbarState] = useReducer<
+    Reducer<toolbarState, toolbarStateAction>
+  >(toolbarStateReducer, initialToolbarState)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
   const {
     isDragging,

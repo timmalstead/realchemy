@@ -1,0 +1,10 @@
+import { toolbarReducerTypes } from "../@types/literals"
+
+export const REFLECT_X: toolbarReducerTypes = "REFLECT_X"
+export const REFLECT_Y: toolbarReducerTypes = "REFLECT_Y"
+export const BRUSH: toolbarReducerTypes = "BRUSH"
+export const ERASER: toolbarReducerTypes = "ERASER"
+export const FREEHAND: toolbarReducerTypes = "FREEHAND"
+export const EYEDROPPER: toolbarReducerTypes = "EYEDROPPER"
+export const CLEAR: toolbarReducerTypes = "CLEAR"
+export const LINE_WIDTH: toolbarReducerTypes = "LINE_WIDTH"
