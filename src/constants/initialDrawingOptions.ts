@@ -1,5 +1,5 @@
 import { drawingOptions } from "../@types/objects"
-import { freehand, grad } from "./toolTypes"
+import { freehand, grad } from "./drawingOptionsTypes"
 import colorTheme from "./colors"
 
 const { solidColor, colorStops } = colorTheme

@@ -1,5 +1,10 @@
 import { componentOption } from "../../@types/objects"
-import { brush, eraser, freehand, eyedropper } from "../../constants/toolTypes"
+import {
+  brush,
+  eraser,
+  freehand,
+  eyedropper,
+} from "../../constants/drawingOptionsTypes"
 import {
   X_REFLECT,
   Y_REFLECT,

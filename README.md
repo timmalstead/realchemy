@@ -8,29 +8,20 @@ https://engineering.datorama.com/mastering-drag-drop-using-reactjs-hooks-fb58dc1
 https://fettblog.eu/typescript-react/components/
 https://fettblog.eu/typescript-react/hooks/#useeffect
 
-before we see about native:
-
-5 rows of 2em by 2em tool icons might work
-
-path intersection
-
 build out options objects and icons
-
-later:
-
+path intersection
 copyright component
 zoom!
 okay, so you can do diagonal reflects, will research more how to do that
 opacitys
 miter limit,
 line cap butt round square
-more reflects
-different toolbars for environments
 dynamic import of toolbars
-key bindings
 stamps
 no doubt lots of other stuff too
 set async/local storage to store drawing on unmount
 and to store drawing component options in addition to current stroke/tool options
+make into pwa
+better code splitting
 
 see about loss on drag speed issue to stack overflow?

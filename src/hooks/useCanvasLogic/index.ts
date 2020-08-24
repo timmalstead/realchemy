@@ -10,7 +10,7 @@ import {
   eyedropper,
   grad,
   solid,
-} from "../../constants/toolTypes"
+} from "../../constants/drawingOptionsTypes"
 
 //#region other drawing logic
 // #region drawing
