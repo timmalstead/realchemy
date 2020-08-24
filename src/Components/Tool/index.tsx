@@ -1,4 +1,4 @@
-import React, { FC, ReactElement, useState } from "react"
+import React, { FC, ReactElement, useState, useEffect } from "react"
 import { ToolSquare, NamePopUp } from "./style"
 import { componentOption } from "../../@types/objects"
 import { toolbarToTool } from "../../@types/props"
@@ -14,21 +14,32 @@ const Tool: FC<componentOption & toolbarToTool> = ({
 }: componentOption & toolbarToTool): ReactElement => {
   const [nameModal, showNameModal] = useState<boolean>(false)
 
+  useEffect(() => {
+    const setTool = ({ code }: KeyboardEvent): void => {
+      const eventKey: string = code[code.length - 1]
+      const toolKey: string = reducerType[0]
+
+      if (eventKey === toolKey) dispatchToolbarState({ type: reducerSelection })
+    }
+
+    window.addEventListener("keydown", setTool)
+  }, [])
+
   const reducerSelection: toolbarReducerTypes = reducerType as toolbarReducerTypes
 
   let timeout: number
 
-  const startCountdown = () => {
+  const startCountdown = (): void => {
     if (isCollapsed === false)
       timeout = setTimeout(() => showNameModal(true), 2000)
   }
 
-  const clearCountdown = () => {
+  const clearCountdown = (): void => {
     clearTimeout(timeout)
     showNameModal(false)
   }
 
-  const handleToolClick = () => {
+  const handleToolClick = (): void => {
     clearTimeout(timeout)
     dispatchToolbarState({ type: reducerSelection })
   }

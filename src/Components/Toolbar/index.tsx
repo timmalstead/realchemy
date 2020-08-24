@@ -31,14 +31,6 @@ const Toolbar: FC<appToToolbar> = ({
 
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
 
-  // useEffect(() => {
-  //   const setToolbarStateOnTabClose = (): void => {
-  //     localStorage.toolbarState = JSON.stringify(toolbarStateObject)
-  //   }
-
-  //   window.addEventListener("unload", setToolbarStateOnTabClose)
-  // }, [toolbarStateObject])
-
   const {
     isDragging,
     toolbarPosition,
