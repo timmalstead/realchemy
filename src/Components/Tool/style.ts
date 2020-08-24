@@ -24,7 +24,7 @@ export const ToolSquare = styled.div`
 `
 ToolSquare.displayName = "ToolSquare"
 
-export const NamePopUp = styled.span`
+export const NamePopUp = styled.label`
   text-align: center;
   position: absolute;
   z-index: 1;

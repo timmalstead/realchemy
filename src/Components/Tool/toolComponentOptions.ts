@@ -73,7 +73,6 @@ const compOptions: componentOption[] = [
       ...prevState,
       currentTool: eyedropper,
     }),
-    //after eye dropper executes, do you want to revert it to previous tool? can you?
   },
   {
     name: "Clear (C)",

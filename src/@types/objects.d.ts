@@ -17,7 +17,7 @@ export type drawingOptions = {
 
 export type componentOption = {
   name: string
-  reducerType: string
+  reducerType: toolbarReducerTypes
   options: any //for now
   svg(color: string): SVGElement | string // or string for now
   changeAction(prevState: drawingOptions): drawingOptions
