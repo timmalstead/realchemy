@@ -1,4 +1,4 @@
-import { toolbarReducerTypes } from "../@types/literals"
+import { toolbarReducerTypes } from "../../@types/literals"
 
 export const REFLECT_X: toolbarReducerTypes = "REFLECT_X"
 export const REFLECT_Y: toolbarReducerTypes = "REFLECT_Y"

@@ -9,7 +9,7 @@ import {
   EYEDROPPER,
   CLEAR,
   LINE_WIDTH,
-} from "../../constants/toolbarReducerTypes"
+} from "../Toolbar/toolbarStateReducerTypes"
 
 const compOptions: componentOption[] = [
   {

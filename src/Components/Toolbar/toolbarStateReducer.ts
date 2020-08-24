@@ -7,21 +7,8 @@ import {
   EYEDROPPER,
   CLEAR,
   LINE_WIDTH,
-} from "../../constants/toolbarReducerTypes"
+} from "./toolbarStateReducerTypes"
 import { toolbarState, toolbarStateAction } from "../../@types/objects"
-
-export const initialToolbarState: toolbarState = JSON.parse(
-  localStorage.toolbarState
-) || {
-  REFLECT_X: false,
-  REFLECT_Y: false,
-  BRUSH: false,
-  ERASER: false,
-  FREEHAND: true,
-  EYEDROPPER: false,
-  CLEAR: false,
-  LINE_WIDTH: false,
-}
 
 const toolbarStateReducer = (
   state: toolbarState,

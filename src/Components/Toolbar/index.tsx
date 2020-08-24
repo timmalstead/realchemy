@@ -6,7 +6,8 @@ import React, {
   Reducer,
   Fragment,
 } from "react"
-import toolbarStateReducer, { initialToolbarState } from "./toolbarStateReducer"
+import toolbarStateReducer from "./toolbarStateReducer"
+import initialToolbarState from "./initialToolbarState"
 import Tool from "../Tool"
 import toolbarComponentOptions from "../Tool/toolComponentOptions"
 import { useDrag, useLocalStorageOnUnload } from "../../hooks/"

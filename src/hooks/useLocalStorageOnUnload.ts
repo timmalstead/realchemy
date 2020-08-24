@@ -8,7 +8,6 @@ const useLocalStorageOnUnload = (
     const setLocalStorageOnTabClose = (): void => {
       localStorage[storageItemTitle] = JSON.stringify(itemToStore)
     }
-
     window.addEventListener("unload", setLocalStorageOnTabClose)
   }, [itemToStore])
 }
