@@ -20,7 +20,7 @@ const Tool: FC<componentOption & toolbarToTool> = ({
       const eventKey: string = code[code.length - 1]
       const toolKey: string = reducerType[0]
 
-      if (eventKey === toolKey) dispatchToolbarState({ type: reducerType })
+      if (eventKey === toolKey) handleToolClick()
     }
 
     window.addEventListener("keydown", setToolWithKeyboard)
@@ -40,6 +40,7 @@ const Tool: FC<componentOption & toolbarToTool> = ({
 
   const handleToolClick = (): void => {
     clearTimeout(timeout)
+    setToolOptions({ type: reducerType })
     dispatchToolbarState({ type: reducerType })
   }
 

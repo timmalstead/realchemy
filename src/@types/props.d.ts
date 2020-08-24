@@ -10,7 +10,7 @@ export interface canvasLogic {
 }
 
 export interface appToToolbar {
-  setToolOptions: Dispatch<SetStateAction<drawingOptions>>
+  setToolOptions: Dispatch<toolbarStateAction>
 }
 
 export interface appToCanvas {

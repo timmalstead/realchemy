@@ -20,7 +20,6 @@ export type componentOption = {
   reducerType: toolbarReducerTypes
   options: any //for now
   svg(color: string): SVGElement | string // or string for now
-  changeAction(prevState: drawingOptions): drawingOptions
 }
 
 export type colorPack = {

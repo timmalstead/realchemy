@@ -499,59 +499,56 @@ const useCanvasLogic = ({
       }
     }
 
+    //okay. need to figure out how to make the control flow in this one better and more reliable. an adventure!
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
-      if (mouseDown && context) {
-        if (currentTool === brush || currentTool === eraser)
-          context.lineWidth = lineWidth
+      if (mouseDown) {
+        // if (currentTool === brush || currentTool === eraser)
+        //   if (solidOrGrad === solid) {
+        //     context.lineWidth = lineWidth
 
-        if (solidOrGrad === solid) {
-          if (currentTool === brush || currentTool === eraser)
-            context.strokeStyle = solidColor
-          else if (currentTool === freehand) context.fillStyle = solidColor
-        }
+        //     if (currentTool === brush || currentTool === eraser) {
+        //       context.strokeStyle = solidColor
+        //       context.fillStyle = null
+        //     } else if (currentTool === freehand) {
+        //       context.fillStyle = solidColor
+        //       context.strokeStyle = null
+        //     }
+        //   }
 
-        if (solidOrGrad === grad) {
-          const gradient = setGradient(
-            canvasOffsetLeft,
-            canvasOffsetTop,
-            end,
-            context,
-            colorStops
-          )
-          if (currentTool === brush || currentTool === eraser)
-            context.strokeStyle = gradient
-          else if (currentTool === freehand) context.fillStyle = gradient
-        }
-
-        // if (currentTool === brush || currentTool === eraser) {
-        //   if (solidOrGrad === solid) context.strokeStyle = solidColor
-        //   else if (solidOrGrad === grad)
-        //     context.strokeStyle = setGradient(
-        //       canvasOffsetLeft,
-        //       canvasOffsetTop,
-        //       end,
-        //       context,
-        //       colorStops
-        //     )
-        //   context.lineWidth = lineWidth
-        // } else if (currentTool === freehand) {
-        //   if (solidOrGrad === solid) context.fillStyle = solidColor
-        //   else if (solidOrGrad === grad)
-        //     context.fillStyle = setGradient(
-        //       canvasOffsetLeft,
-        //       canvasOffsetTop,
-        //       end,
-        //       context,
-        //       colorStops
-        //     )
+        // if (solidOrGrad === grad) {
+        //   const gradient = setGradient(
+        //     canvasOffsetLeft,
+        //     canvasOffsetTop,
+        //     end,
+        //     context,
+        //     colorStops
+        //   )
+        //   if (currentTool === brush || currentTool === eraser)
+        //     context.strokeStyle = gradient
+        //   else if (currentTool === freehand) context.fillStyle = gradient
         // }
 
-        if (reflectX) {
-          context.translate(innerWidth, 0)
-          context.scale(-1, 1)
-        } else if (reflectY) {
-          context.translate(0, innerHeight)
-          context.scale(1, -1)
+        if (currentTool === brush || currentTool === eraser) {
+          if (solidOrGrad === solid) context.strokeStyle = solidColor
+          else if (solidOrGrad === grad)
+            context.strokeStyle = setGradient(
+              canvasOffsetLeft,
+              canvasOffsetTop,
+              end,
+              context,
+              colorStops
+            )
+          context.lineWidth = lineWidth
+        } else if (currentTool === freehand) {
+          if (solidOrGrad === solid) context.fillStyle = solidColor
+          else if (solidOrGrad === grad)
+            context.fillStyle = setGradient(
+              canvasOffsetLeft,
+              canvasOffsetTop,
+              end,
+              context,
+              colorStops
+            )
         }
 
         start = {
@@ -567,8 +564,17 @@ const useCanvasLogic = ({
         drawingLoop(context, start, end, points, lineWidth)
 
         if (currentTool === brush || currentTool === eraser) context.stroke()
-        if (currentTool === freehand) context.fill()
+        else if (currentTool === freehand) context.fill()
+
         context.closePath()
+
+        if (reflectX) {
+          context.translate(innerWidth, 0)
+          context.scale(-1, 1)
+        } else if (reflectY) {
+          context.translate(0, innerHeight)
+          context.scale(1, -1)
+        }
       }
     }
 
@@ -592,7 +598,15 @@ const useCanvasLogic = ({
         context.scale(devicePixelRatio, devicePixelRatio)
       }
     }
-  }, [context])
+  }, [
+    context,
+    setContext,
+    toolOptions,
+    canvasRef,
+    innerWidth,
+    innerHeight,
+    devicePixelRatio,
+  ])
 }
 
 export default useCanvasLogic
