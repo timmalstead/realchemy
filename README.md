@@ -8,6 +8,8 @@ https://engineering.datorama.com/mastering-drag-drop-using-reactjs-hooks-fb58dc1
 https://fettblog.eu/typescript-react/components/
 https://fettblog.eu/typescript-react/hooks/#useeffect
 
+send toolbarActions to drawing tools reducer? how can we improve that?
+
 build out options objects and icons
 path intersection
 copyright component
