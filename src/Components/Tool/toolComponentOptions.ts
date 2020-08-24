@@ -1,20 +1,20 @@
 import { componentOption } from "../../@types/objects"
 import { brush, eraser, freehand, eyedropper } from "../../constants/toolTypes"
 import {
-  REFLECT_X,
-  REFLECT_Y,
+  X_REFLECT,
+  Y_REFLECT,
   BRUSH,
   ERASER,
   FREEHAND,
-  EYEDROPPER,
+  IDROPPER,
   CLEAR,
   LINE_WIDTH,
 } from "../Toolbar/toolbarStateReducerTypes"
 
 const compOptions: componentOption[] = [
   {
-    name: "Reflect X",
-    reducerType: REFLECT_X,
+    name: "Reflect X (X)",
+    reducerType: X_REFLECT,
     options: null,
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -24,8 +24,8 @@ const compOptions: componentOption[] = [
     }),
   },
   {
-    name: "Reflect Y",
-    reducerType: REFLECT_Y,
+    name: "Reflect Y (Y)",
+    reducerType: Y_REFLECT,
     options: null,
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -35,7 +35,7 @@ const compOptions: componentOption[] = [
     }),
   },
   {
-    name: "Brush",
+    name: "Brush (B)",
     reducerType: BRUSH,
     options: "brush size, brush hardness, opacity",
     svg: color => "svg as function with a color argument",
@@ -45,7 +45,7 @@ const compOptions: componentOption[] = [
     }),
   },
   {
-    name: "Eraser",
+    name: "Eraser (E)",
     reducerType: ERASER,
     options: "eraser size, eraser hardness, opacity",
     svg: color => "svg as function with a color argument",
@@ -55,7 +55,7 @@ const compOptions: componentOption[] = [
     }),
   },
   {
-    name: "Freehand",
+    name: "Freehand (F)",
     reducerType: FREEHAND,
     options: "path intersection, opacity",
     svg: color => "svg as function with a color argument",
@@ -65,8 +65,8 @@ const compOptions: componentOption[] = [
     }),
   },
   {
-    name: "Eyedropper",
-    reducerType: EYEDROPPER,
+    name: "Eyedropper (I)",
+    reducerType: IDROPPER,
     options: "area to poll",
     svg: color => "svg as function with a color argument",
     changeAction: prevState => ({
@@ -76,7 +76,7 @@ const compOptions: componentOption[] = [
     //after eye dropper executes, do you want to revert it to previous tool? can you?
   },
   {
-    name: "Clear",
+    name: "Clear (C)",
     reducerType: CLEAR,
     options: "clear color",
     svg: color => "svg as function with a color argument",
@@ -87,7 +87,7 @@ const compOptions: componentOption[] = [
     //what's the best way to turn off clear when done?
   },
   {
-    name: "Line Width",
+    name: "Line Width (L)",
     reducerType: LINE_WIDTH,
     options: "width",
     svg: color => "svg as function with a color argument",

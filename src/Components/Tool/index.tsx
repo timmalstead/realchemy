@@ -15,14 +15,14 @@ const Tool: FC<componentOption & toolbarToTool> = ({
   const [nameModal, showNameModal] = useState<boolean>(false)
 
   useEffect(() => {
-    const setTool = ({ code }: KeyboardEvent): void => {
+    const setToolWithKeyboard = ({ code }: KeyboardEvent): void => {
       const eventKey: string = code[code.length - 1]
       const toolKey: string = reducerType[0]
 
       if (eventKey === toolKey) dispatchToolbarState({ type: reducerSelection })
     }
 
-    window.addEventListener("keydown", setTool)
+    window.addEventListener("keydown", setToolWithKeyboard)
   }, [])
 
   const reducerSelection: toolbarReducerTypes = reducerType as toolbarReducerTypes
@@ -52,7 +52,7 @@ const Tool: FC<componentOption & toolbarToTool> = ({
       isToolSelected={toolbarStateObject[reducerSelection]}
     >
       {nameModal ? <NamePopUp>{name}</NamePopUp> : null}
-      <span>{name.slice(0, 2)}</span>
+      {reducerType[0]}
     </ToolSquare>
   )
 }

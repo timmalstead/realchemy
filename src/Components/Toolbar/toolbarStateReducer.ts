@@ -1,10 +1,10 @@
 import {
-  REFLECT_X,
-  REFLECT_Y,
+  X_REFLECT,
+  Y_REFLECT,
   BRUSH,
   ERASER,
   FREEHAND,
-  EYEDROPPER,
+  IDROPPER,
   CLEAR,
   LINE_WIDTH,
 } from "./toolbarStateReducerTypes"
@@ -15,17 +15,17 @@ const toolbarStateReducer = (
   action: toolbarStateAction
 ): toolbarState => {
   switch (action.type) {
-    case REFLECT_X:
+    case X_REFLECT:
       return {
         ...state,
-        REFLECT_X: state.REFLECT_X ? false : true,
-        REFLECT_Y: false,
+        X_REFLECT: state.X_REFLECT ? false : true,
+        Y_REFLECT: false,
       }
-    case REFLECT_Y:
+    case Y_REFLECT:
       return {
         ...state,
-        REFLECT_Y: state.REFLECT_Y ? false : true,
-        REFLECT_X: false,
+        Y_REFLECT: state.Y_REFLECT ? false : true,
+        X_REFLECT: false,
       }
     case BRUSH:
       return {
@@ -33,7 +33,7 @@ const toolbarStateReducer = (
         BRUSH: true,
         ERASER: false,
         FREEHAND: false,
-        EYEDROPPER: false,
+        IDROPPER: false,
         CLEAR: false,
         LINE_WIDTH: false,
       }
@@ -43,7 +43,7 @@ const toolbarStateReducer = (
         BRUSH: false,
         ERASER: true,
         FREEHAND: false,
-        EYEDROPPER: false,
+        IDROPPER: false,
         CLEAR: false,
         LINE_WIDTH: false,
       }
@@ -53,17 +53,17 @@ const toolbarStateReducer = (
         BRUSH: false,
         ERASER: false,
         FREEHAND: true,
-        EYEDROPPER: false,
+        IDROPPER: false,
         CLEAR: false,
         LINE_WIDTH: false,
       }
-    case EYEDROPPER:
+    case IDROPPER:
       return {
         ...state,
         BRUSH: false,
         ERASER: false,
         FREEHAND: false,
-        EYEDROPPER: true,
+        IDROPPER: true,
         CLEAR: false,
         LINE_WIDTH: false,
       }
@@ -73,7 +73,7 @@ const toolbarStateReducer = (
         BRUSH: false,
         ERASER: false,
         FREEHAND: false,
-        EYEDROPPER: false,
+        IDROPPER: false,
         CLEAR: true,
         LINE_WIDTH: false,
       }
@@ -83,7 +83,7 @@ const toolbarStateReducer = (
         BRUSH: false,
         ERASER: false,
         FREEHAND: false,
-        EYEDROPPER: false,
+        IDROPPER: false,
         CLEAR: false,
         LINE_WIDTH: true,
       }

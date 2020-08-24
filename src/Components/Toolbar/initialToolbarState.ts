@@ -3,12 +3,12 @@ import { toolbarState } from "../../@types/objects"
 const initialToolbarState: toolbarState = localStorage.toolbarState
   ? JSON.parse(localStorage.toolbarState)
   : {
-      REFLECT_X: false,
-      REFLECT_Y: false,
+      X_REFLECT: false,
+      Y_REFLECT: false,
       BRUSH: false,
       ERASER: false,
       FREEHAND: true,
-      EYEDROPPER: false,
+      IDROPPER: false,
       CLEAR: false,
       LINE_WIDTH: false,
     }

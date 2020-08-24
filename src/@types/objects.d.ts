@@ -44,12 +44,12 @@ export type positionParams = {
 export type toolbarStateAction = { type: toolbarReducerTypes }
 
 export type toolbarState = {
-  REFLECT_X: boolean
-  REFLECT_Y: boolean
+  X_REFLECT: boolean
+  Y_REFLECT: boolean
   BRUSH: boolean
   ERASER: boolean
   FREEHAND: boolean
-  EYEDROPPER: boolean
+  IDROPPER: boolean
   CLEAR: boolean
   LINE_WIDTH: boolean
 }
