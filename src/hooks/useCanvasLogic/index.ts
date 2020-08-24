@@ -500,6 +500,7 @@ const useCanvasLogic = ({
     }
 
     //okay. need to figure out how to make the control flow in this one better and more reliable. an adventure!
+    //possibly functions in order save -> setBrush || setEraser || setFreehand etc -> draw -> reflect -> restore
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown) {
         // if (currentTool === brush || currentTool === eraser)
