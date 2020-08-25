@@ -459,6 +459,8 @@ import {
 //#endregion
 //#endregion
 
+//I think my mental model on this has been wrong. If it is rerendered each time the tooloptions changes, we need to play to that. So, let's continue work on some of the other stuff, like color options and then come back to this and refactor it to that. we may need a separate control flow for each group of options. Also, it looks pretty responsive when you aren't mixing options as hardcoded and from state, which makes sense.
+
 const useCanvasLogic = ({
   innerWidth,
   innerHeight,
@@ -467,7 +469,6 @@ const useCanvasLogic = ({
   canvasRef,
 }: canvasLogic): void => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-
   useEffect((): void => {
     let mouseDown: boolean = false
     let [canvasOffsetLeft, canvasOffsetTop]: number[] = [0, 0]
@@ -502,16 +503,16 @@ const useCanvasLogic = ({
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown) {
+        // have reflects at the beginning and end and that is fun swirly stuff
         if (currentTool === brush || currentTool === eraser)
           context.lineWidth = lineWidth
 
         if (solidOrGrad === solid) {
           if (currentTool === brush || currentTool === eraser) {
-            context.fillStyle = "green"
             context.strokeStyle = solidColor
+            context.fillStyle = "green"
           } else if (currentTool === freehand) {
-            context.fillStyle = "blue"
-            // context.strokeStyle = null
+            context.fillStyle = solidColor
           }
         }
 
@@ -544,16 +545,6 @@ const useCanvasLogic = ({
         else if (currentTool === freehand) context.fill()
 
         context.closePath()
-
-        if (reflectX === true) {
-          // context.translate(innerWidth, 0)
-          // context.scale(-1, 1)
-          context.setTransform(-1, 0, 0, 1, innerWidth, 0)
-        } else if (reflectY === true) {
-          // context.translate(0, innerHeight)
-          // context.scale(1, -1)
-          context.setTransform(1, 0, 0, -1, 0, innerHeight)
-        } else context.setTransform(1, 0, 0, 1, 0, 0)
       }
     }
 
@@ -576,6 +567,11 @@ const useCanvasLogic = ({
       }
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio)
+        if (reflectX) {
+          context.setTransform(-1, 0, 0, 1, innerWidth, 0)
+        } else if (reflectY) {
+          context.setTransform(1, 0, 0, -1, 0, innerHeight)
+        } else context.setTransform(1, 0, 0, 1, 0, 0)
         // context.fillStyle = "#FFF"
         // context.fillRect(0, 0, innerWidth, innerHeight)
       }
