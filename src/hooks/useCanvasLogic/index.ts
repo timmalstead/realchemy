@@ -467,6 +467,7 @@ const useCanvasLogic = ({
   canvasRef,
 }: canvasLogic): void => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
+
   useEffect((): void => {
     let mouseDown: boolean = false
     let [canvasOffsetLeft, canvasOffsetTop]: number[] = [0, 0]
@@ -499,56 +500,32 @@ const useCanvasLogic = ({
       }
     }
 
-    //okay. need to figure out how to make the control flow in this one better and more reliable. an adventure!
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown) {
-        // if (currentTool === brush || currentTool === eraser)
-        //   if (solidOrGrad === solid) {
-        //     context.lineWidth = lineWidth
-
-        //     if (currentTool === brush || currentTool === eraser) {
-        //       context.strokeStyle = solidColor
-        //       context.fillStyle = null
-        //     } else if (currentTool === freehand) {
-        //       context.fillStyle = solidColor
-        //       context.strokeStyle = null
-        //     }
-        //   }
-
-        // if (solidOrGrad === grad) {
-        //   const gradient = setGradient(
-        //     canvasOffsetLeft,
-        //     canvasOffsetTop,
-        //     end,
-        //     context,
-        //     colorStops
-        //   )
-        //   if (currentTool === brush || currentTool === eraser)
-        //     context.strokeStyle = gradient
-        //   else if (currentTool === freehand) context.fillStyle = gradient
-        // }
-
-        if (currentTool === brush || currentTool === eraser) {
-          if (solidOrGrad === solid) context.strokeStyle = solidColor
-          else if (solidOrGrad === grad)
-            context.strokeStyle = setGradient(
-              canvasOffsetLeft,
-              canvasOffsetTop,
-              end,
-              context,
-              colorStops
-            )
+        if (currentTool === brush || currentTool === eraser)
           context.lineWidth = lineWidth
-        } else if (currentTool === freehand) {
-          if (solidOrGrad === solid) context.fillStyle = solidColor
-          else if (solidOrGrad === grad)
-            context.fillStyle = setGradient(
-              canvasOffsetLeft,
-              canvasOffsetTop,
-              end,
-              context,
-              colorStops
-            )
+
+        if (solidOrGrad === solid) {
+          if (currentTool === brush || currentTool === eraser) {
+            context.fillStyle = "green"
+            context.strokeStyle = solidColor
+          } else if (currentTool === freehand) {
+            context.fillStyle = "blue"
+            // context.strokeStyle = null
+          }
+        }
+
+        if (solidOrGrad === grad) {
+          const gradient = setGradient(
+            canvasOffsetLeft,
+            canvasOffsetTop,
+            end,
+            context,
+            colorStops
+          )
+          if (currentTool === brush || currentTool === eraser)
+            context.strokeStyle = gradient
+          else if (currentTool === freehand) context.fillStyle = gradient
         }
 
         start = {
@@ -568,14 +545,20 @@ const useCanvasLogic = ({
 
         context.closePath()
 
-        if (reflectX) {
-          context.translate(innerWidth, 0)
-          context.scale(-1, 1)
-        } else if (reflectY) {
-          context.translate(0, innerHeight)
-          context.scale(1, -1)
-        }
+        if (reflectX === true) {
+          // context.translate(innerWidth, 0)
+          // context.scale(-1, 1)
+          context.setTransform(-1, 0, 0, 1, innerWidth, 0)
+        } else if (reflectY === true) {
+          // context.translate(0, innerHeight)
+          // context.scale(1, -1)
+          context.setTransform(1, 0, 0, -1, 0, innerHeight)
+        } else context.setTransform(1, 0, 0, 1, 0, 0)
       }
+    }
+
+    const handleMouseUp = (): void => {
+      mouseDown = false
     }
 
     if (canvasRef.current) {
@@ -584,10 +567,7 @@ const useCanvasLogic = ({
       if (renderContext) {
         canvasRef.current.addEventListener("mousedown", handleMouseDown)
         canvasRef.current.addEventListener("mousemove", handleMouseMove)
-        canvasRef.current.addEventListener(
-          "mouseup",
-          (): boolean => (mouseDown = false)
-        )
+        canvasRef.current.addEventListener("mouseup", handleMouseUp)
 
         canvasOffsetLeft = canvasRef.current.offsetLeft
         canvasOffsetTop = canvasRef.current.offsetTop
@@ -596,17 +576,11 @@ const useCanvasLogic = ({
       }
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio)
+        // context.fillStyle = "#FFF"
+        // context.fillRect(0, 0, innerWidth, innerHeight)
       }
     }
-  }, [
-    context,
-    setContext,
-    toolOptions,
-    canvasRef,
-    innerWidth,
-    innerHeight,
-    devicePixelRatio,
-  ])
+  }, [context, toolOptions])
 }
 
 export default useCanvasLogic
