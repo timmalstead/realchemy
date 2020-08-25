@@ -21,7 +21,7 @@ const drawingLoop = (
   context.moveTo(firstPoint.x, firstPoint.y)
 
   const loopLength: number = points.length
-  if (loopLength) {
+  if (loopLength)
     for (let i = 1; i < loopLength - 2; i++) {
       const bezierX: number = points[i].x
       const bezierY: number = points[i].y
@@ -30,8 +30,8 @@ const drawingLoop = (
       context.quadraticCurveTo(bezierX, bezierY, endX, endY)
     }
 
-    context.lineTo(end.x, end.y)
-  }
+  // this is what causes multiple lines
+  // context.lineTo(end.x, end.y)
 }
 
 export default drawingLoop

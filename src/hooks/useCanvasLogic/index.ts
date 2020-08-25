@@ -502,8 +502,7 @@ const useCanvasLogic = ({
     }
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
-      if (mouseDown) {
-        // have reflects at the beginning and end and that is fun swirly stuff
+      if (mouseDown && context) {
         if (currentTool === brush || currentTool === eraser)
           context.lineWidth = lineWidth
 
@@ -543,7 +542,6 @@ const useCanvasLogic = ({
 
         if (currentTool === brush || currentTool === eraser) context.stroke()
         else if (currentTool === freehand) context.fill()
-
         context.closePath()
       }
     }
