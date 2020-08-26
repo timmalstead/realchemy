@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
+import canvasPrep from "./canvasPrep"
 import setGradient from "./setGradient"
 import drawingLoop from "./drawingLoop"
 import { canvasLogic } from "../../@types/props"
@@ -459,8 +460,6 @@ import {
 //#endregion
 //#endregion
 
-//I think my mental model on this has been wrong. If it is rerendered each time the tooloptions changes, we need to play to that. So, let's continue work on some of the other stuff, like color options and then come back to this and refactor it to that. we may need a separate control flow for each group of options. Also, it looks pretty responsive when you aren't mixing options as hardcoded and from state, which makes sense.
-
 const useCanvasLogic = ({
   innerWidth,
   innerHeight,
@@ -468,12 +467,7 @@ const useCanvasLogic = ({
   toolOptions,
   canvasRef,
 }: canvasLogic): void => {
-  // const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-  let context = useRef<CanvasRenderingContext2D | null>(null).current
-
-  // useEffect(() => {
-  //   if (context) console.log(context.getTransform())
-  // }, [toolOptions])
+  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
 
   useEffect((): void => {
     let mouseDown: boolean = false
@@ -499,14 +493,24 @@ const useCanvasLogic = ({
 
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       if (context) {
+        start = {
+          x: clientX - canvasOffsetLeft,
+          y: clientY - canvasOffsetTop,
+        }
+
+        end = start
+        mouseDown = true
+
         if (root.children.length < 3) {
           tempCanvas = document.createElement("canvas")
+          tempCanvas.width = innerWidth
+          tempCanvas.height = innerHeight
+          tempCanvas.style.display = "none"
           tempCanvas.id = "temp-canvas"
           root.appendChild(tempCanvas)
         } else tempCanvas = document.getElementById("temp-canvas")
+
         tempContext = tempCanvas.getContext("2d")
-        tempCanvas.width = innerWidth
-        tempCanvas.height = innerHeight
 
         if (currentTool === brush || currentTool === eraser)
           tempContext.lineWidth = lineWidth
@@ -537,20 +541,11 @@ const useCanvasLogic = ({
             tempContext.fillStyle = gradient
           }
         }
-
-        start = {
-          x: clientX - canvasOffsetLeft,
-          y: clientY - canvasOffsetTop,
-        }
-
-        end = start
-        mouseDown = true
       }
     }
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown && context && tempContext) {
-        context.save()
         start = {
           x: end.x,
           y: end.y,
@@ -563,48 +558,32 @@ const useCanvasLogic = ({
 
         drawingLoop(tempContext, start, points, lineWidth)
 
-        // this is what causes multiple lines
-        // tempContext.lineTo(end.x, end.y)
-
         if (currentTool === brush || currentTool === eraser)
           tempContext.stroke()
         else if (currentTool === freehand) tempContext.fill()
+
         tempContext.closePath()
+
         context.drawImage(tempCanvas, 0, 0)
+
         if (reflectX) {
-          context.save()
           tempContext.transform(-1, 0, 0, 1, innerWidth, 0)
           context.drawImage(tempCanvas, 0, 0)
-          tempContext.resetTransform()
-        }
+        } else if (reflectY) {
+          tempContext.transform(1, 0, 0, -1, 0, innerHeight)
+          context.drawImage(tempCanvas, 0, 0)
+        } else return
       }
     }
 
     const handleMouseUp = (): void => {
-      if (mouseDown && context) {
+      if (mouseDown && context && tempContext) {
         mouseDown = false
         points.length = 0
-
-        // if (reflectX) {
-        //   tempContext.transform(-1, 0, 0, 1, innerWidth, 0)
-        //   context.drawImage(tempCanvas, 0, 0)
-        // } else if (reflectY) {
-        // context.setTransform(1, 0, 0, -1, 0, innerHeight)
-        //   context.drawImage(tempCanvas, 0, 0)
-        //   context.setTransform(1, 0, 0, 1, 0, 0)
-        // }
-        // context.save()
-        // context.setTransform(1, 0, 0, 1, 0, 0)
-        // context.clearRect(0, 0, innerWidth, innerHeight)
-        // context.restore()
-        // context.drawImage(tempCanvas, 0, 0)
-        // context.setTransform(-1, 0, 0, 1, innerWidth, 0)
-        // context.drawImage(tempCanvas, 0, 0)
-        // context.setTransform(1, 0, 0, 1, 0, 0)
       }
     }
 
-    if (canvasRef.current && !context) {
+    if (canvasRef.current) {
       const renderContext = canvasRef.current.getContext("2d")
 
       console.log("setting up")
@@ -616,11 +595,13 @@ const useCanvasLogic = ({
         canvasOffsetLeft = canvasRef.current.offsetLeft
         canvasOffsetTop = canvasRef.current.offsetTop
 
-        // setContext(renderContext)
-        context = renderContext
+        setContext(renderContext)
       }
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio)
+        if (isClear) {
+          //use clearing color
+        } else canvasPrep(context, innerWidth, innerHeight)
       }
     }
   }, [context, toolOptions])

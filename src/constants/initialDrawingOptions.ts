@@ -1,5 +1,5 @@
 import { drawingOptions } from "../@types/objects"
-import { freehand, solid } from "./drawingOptionsTypes"
+import { brush, solid } from "./drawingOptionsTypes"
 import colorTheme from "./colors"
 
 const { solidColor, colorStops } = colorTheme
@@ -11,7 +11,7 @@ const initOpts: drawingOptions = localStorage.savedToolOptions
       reflectY: false,
       isClear: false,
       lineWidth: 10,
-      currentTool: freehand,
+      currentTool: brush,
       solidOrGrad: solid,
       solidColor,
       colorStops,
