@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import canvasPrep from "./canvasPrep"
+import createTempCanvas from "./createTempCanvas"
 import setGradient from "./setGradient"
 import drawingLoop from "./drawingLoop"
 import { canvasLogic } from "../../@types/props"
@@ -502,19 +503,10 @@ const useCanvasLogic = ({
 
         end = start
 
-        if (root.children.length < 3) {
-          tempCanvas = document.createElement("canvas")
-          tempCanvas.width = innerWidth
-          tempCanvas.height = innerHeight
-          tempCanvas.style.display = "none"
-          tempCanvas.id = "temp-canvas"
-          root.appendChild(tempCanvas)
-        } else tempCanvas = document.getElementById("temp-canvas")
+        tempCanvas = createTempCanvas(root, tempCanvas, innerWidth, innerHeight)
 
         tempContext = tempCanvas.getContext("2d")
-
-        if (currentTool === brush || currentTool === eraser)
-          tempContext.lineWidth = lineWidth
+        tempContext.lineWidth = lineWidth
 
         if (solidOrGrad === solid) {
           if (currentTool === brush || currentTool === eraser) {
@@ -531,7 +523,7 @@ const useCanvasLogic = ({
             canvasOffsetLeft,
             canvasOffsetTop,
             end,
-            context,
+            tempContext,
             colorStops
           )
           if (currentTool === brush || currentTool === eraser) {
@@ -581,7 +573,6 @@ const useCanvasLogic = ({
       if (mouseDown && context && tempContext) {
         mouseDown = false
         points.length = 0
-        // if (!reflectX || !reflectY) tempCanvas.remove()
       }
     }
 
