@@ -3,8 +3,7 @@ import { coords } from "../../@types/objects"
 const drawingLoop = (
   context: CanvasRenderingContext2D,
   start: coords,
-  points: coords[],
-  lineWidth: number
+  points: coords[]
 ): void => {
   points.push(start)
 

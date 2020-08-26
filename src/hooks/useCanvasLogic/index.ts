@@ -557,7 +557,7 @@ const useCanvasLogic = ({
           y: clientY + canvasOffsetTop,
         }
 
-        drawingLoop(tempContext, start, points, lineWidth)
+        drawingLoop(tempContext, start, points)
 
         if (currentTool === brush || currentTool === eraser)
           tempContext.stroke()

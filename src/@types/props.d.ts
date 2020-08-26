@@ -1,4 +1,4 @@
-import { MutableRefObject, SetStateAction, Dispatch } from "react"
+import { MutableRefObject, Dispatch } from "react"
 import { drawingOptions, toolbarState, toolbarStateAction } from "./objects"
 
 export interface canvasLogic {
