@@ -487,9 +487,52 @@ const useCanvasLogic = ({
       colorStops,
     } = toolOptions
 
+    const root: HTMLElement = document.getElementById("root")
+
+    let tempCanvas: HTMLCanvasElement, tempContext: CanvasRenderingContext2D
+
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       if (context) {
-        points.length = 0
+        if (reflectX || reflectY) {
+          if (root.children.length < 3) {
+            tempCanvas = document.createElement("canvas")
+            tempCanvas.id = "temp-canvas"
+            root.appendChild(tempCanvas)
+          } else tempCanvas = document.getElementById("temp-canvas")
+          tempContext = tempCanvas.getContext("2d")
+          tempCanvas.width = innerWidth
+          tempCanvas.height = innerHeight
+        }
+
+        if (currentTool === brush || currentTool === eraser)
+          tempContext.lineWidth = lineWidth
+
+        if (solidOrGrad === solid) {
+          if (currentTool === brush || currentTool === eraser) {
+            tempContext.strokeStyle = solidColor
+            tempContext.fillStyle = "#FFFFFF00"
+          } else if (currentTool === freehand) {
+            tempContext.strokeStyle = "#FFFFFF00"
+            tempContext.fillStyle = solidColor
+          }
+        }
+
+        if (solidOrGrad === grad) {
+          const gradient = setGradient(
+            canvasOffsetLeft,
+            canvasOffsetTop,
+            end,
+            context,
+            colorStops
+          )
+          if (currentTool === brush || currentTool === eraser) {
+            tempContext.strokeStyle = gradient
+            tempContext.fillStyle = "#FFFFFF00"
+          } else if (currentTool === freehand) {
+            tempContext.strokeStyle = "#FFFFFF00"
+            tempContext.fillStyle = gradient
+          }
+        }
 
         start = {
           x: clientX - canvasOffsetLeft,
@@ -502,32 +545,7 @@ const useCanvasLogic = ({
     }
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
-      if (mouseDown && context) {
-        if (currentTool === brush || currentTool === eraser)
-          context.lineWidth = lineWidth
-
-        if (solidOrGrad === solid) {
-          if (currentTool === brush || currentTool === eraser) {
-            context.strokeStyle = solidColor
-            context.fillStyle = "green"
-          } else if (currentTool === freehand) {
-            context.fillStyle = solidColor
-          }
-        }
-
-        if (solidOrGrad === grad) {
-          const gradient = setGradient(
-            canvasOffsetLeft,
-            canvasOffsetTop,
-            end,
-            context,
-            colorStops
-          )
-          if (currentTool === brush || currentTool === eraser)
-            context.strokeStyle = gradient
-          else if (currentTool === freehand) context.fillStyle = gradient
-        }
-
+      if (mouseDown && context && tempContext) {
         start = {
           x: end.x,
           y: end.y,
@@ -538,16 +556,28 @@ const useCanvasLogic = ({
           y: clientY + canvasOffsetTop,
         }
 
-        drawingLoop(context, start, end, points, lineWidth)
+        drawingLoop(tempContext, start, points, lineWidth)
 
-        if (currentTool === brush || currentTool === eraser) context.stroke()
-        else if (currentTool === freehand) context.fill()
-        context.closePath()
+        // this is what causes multiple lines
+        // tempContext.lineTo(end.x, end.y)
+
+        if (currentTool === brush || currentTool === eraser)
+          tempContext.stroke()
+        else if (currentTool === freehand) tempContext.fill()
+        tempContext.closePath()
       }
     }
 
     const handleMouseUp = (): void => {
-      mouseDown = false
+      if (mouseDown && context) {
+        mouseDown = false
+        points.length = 0
+
+        context.drawImage(tempCanvas, 0, 0)
+        context.setTransform(-1, 0, 0, 1, innerWidth, 0)
+        context.drawImage(tempCanvas, 0, 0)
+        context.setTransform(1, 0, 0, 1, 0, 0)
+      }
     }
 
     if (canvasRef.current) {
@@ -565,13 +595,6 @@ const useCanvasLogic = ({
       }
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio)
-        if (reflectX) {
-          context.setTransform(-1, 0, 0, 1, innerWidth, 0)
-        } else if (reflectY) {
-          context.setTransform(1, 0, 0, -1, 0, innerHeight)
-        } else context.setTransform(1, 0, 0, 1, 0, 0)
-        // context.fillStyle = "#FFF"
-        // context.fillRect(0, 0, innerWidth, innerHeight)
       }
     }
   }, [context, toolOptions])

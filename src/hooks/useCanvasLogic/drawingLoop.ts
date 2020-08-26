@@ -3,7 +3,6 @@ import { coords } from "../../@types/objects"
 const drawingLoop = (
   context: CanvasRenderingContext2D,
   start: coords,
-  end: coords,
   points: coords[],
   lineWidth: number
 ): void => {
@@ -11,11 +10,9 @@ const drawingLoop = (
 
   const firstPoint: coords = points[0]
 
-  if (points.length > 10) {
-    context.beginPath()
-    context.arc(firstPoint.x, firstPoint.y, lineWidth / 2, 0, Math.PI * 2)
-    context.closePath()
-  }
+  context.beginPath()
+  context.arc(firstPoint.x, firstPoint.y, 0, 0, Math.PI * 2)
+  context.closePath()
 
   context.beginPath()
   context.moveTo(firstPoint.x, firstPoint.y)
@@ -30,8 +27,12 @@ const drawingLoop = (
       context.quadraticCurveTo(bezierX, bezierY, endX, endY)
     }
 
-  // this is what causes multiple lines
-  // context.lineTo(end.x, end.y)
+  context.quadraticCurveTo(
+    points[points.length - 2].x,
+    points[points.length - 2].y,
+    points[points.length - 1].x,
+    points[points.length - 1].y
+  )
 }
 
 export default drawingLoop
