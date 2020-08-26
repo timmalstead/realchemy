@@ -1,465 +1,13 @@
-import { useState, useEffect, useRef } from "react"
-import setGradient from "./setGradient"
-import drawingLoop from "./drawingLoop"
+import { useState, useEffect } from "react"
 import { canvasLogic } from "../../@types/props"
-import { coords } from "../../@types/objects"
+import { coords, colorStop } from "../../@types/objects"
 import {
   brush,
   eraser,
   freehand,
-  eyedropper,
   grad,
   solid,
 } from "../../constants/drawingOptionsTypes"
-
-//#region other drawing logic
-// #region drawing
-// useEffect(() => {
-//   let mouseDown: boolean = false
-//   let start: Coords = { x: 0, y: 0 }
-//   let end: Coords = { x: 0, y: 0 }
-//   let [canvasOffsetLeft, canvasOffsetTop] = [0, 0]
-
-//   const handleMouseDown = (e: MouseEvent): void => {
-//     mouseDown = true
-
-//     start = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-
-//     end = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-//   }
-
-//   const handleMouseUp = (e: MouseEvent): void => {
-//     mouseDown = false
-//   }
-
-//   function handleMouseMove(e: MouseEvent): void {
-//     if (mouseDown && context) {
-//       start = {
-//         x: end.x,
-//         y: end.y,
-//       }
-
-//       end = {
-//         x: e.clientX + canvasOffsetLeft,
-//         y: e.clientY + canvasOffsetTop,
-//       }
-//       context.beginPath()
-//       context.moveTo(start.x, start.y)
-//       context.lineTo(end.x, end.y)
-//       context.strokeStyle = "#ff0000"
-//       context.lineWidth = 10
-//       context.stroke()
-//       context.closePath()
-//     }
-//   }
-//   if (canvasRef.current) {
-//     const renderContext = canvasRef.current.getContext("2d")
-
-//     if (renderContext) {
-//       canvasRef.current.addEventListener("mousedown", handleMouseDown)
-//       canvasRef.current.addEventListener("mouseup", handleMouseUp)
-//       canvasRef.current.addEventListener("mousemove", handleMouseMove)
-
-//       canvasOffsetLeft = canvasRef.current.offsetLeft
-//       canvasOffsetTop = canvasRef.current.offsetTop
-
-//       setContext(renderContext)
-//     }
-//   }
-// }, [context])
-//#endregion
-
-//#region burst from central point
-// useEffect(() => {
-//   let mouseDown: boolean = false
-//   let start: Coords = { x: 0, y: 0 }
-//   let end: Coords = { x: 0, y: 0 }
-//   let [canvasOffsetLeft, canvasOffsetTop] = [0, 0]
-//   const setLineWidth: number = 10
-//   const paintColor: string = "#FF0000"
-//   const points: Array<Coords> = []
-
-//   const handleMouseDown = (e: MouseEvent): void => {
-//     mouseDown = true
-
-//     start = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-
-//     end = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-//   }
-
-//   const handleMouseUp = (e: MouseEvent): void => {
-//     mouseDown = false
-//   }
-
-//   const handleMouseMove = (e: MouseEvent): void => {
-//     if (mouseDown && context) {
-//       start = {
-//         x: end.x,
-//         y: end.y,
-//       }
-
-//       end = {
-//         x: e.clientX + canvasOffsetLeft,
-//         y: e.clientY + canvasOffsetTop,
-//       }
-
-//       points.push(start)
-
-//       const firstPoint: Coords = points[0]
-
-//       context.strokeStyle = paintColor
-//       context.fillStyle = paintColor
-//       context.lineWidth = setLineWidth
-
-//       context.beginPath()
-//       context.moveTo(firstPoint.x, firstPoint.y)
-//       context.arc(
-//         firstPoint.x,
-//         firstPoint.y,
-//         setLineWidth / 2,
-//         0,
-//         Math.PI * 2
-//       )
-
-//       context.lineTo(end.x, end.y)
-//       context.fill()
-
-//       context.closePath()
-//     }
-//   }
-//   if (canvasRef.current) {
-//     const renderContext = canvasRef.current.getContext("2d")
-
-//     if (renderContext) {
-//       canvasRef.current.addEventListener("mousedown", handleMouseDown)
-//       canvasRef.current.addEventListener("mouseup", handleMouseUp)
-//       canvasRef.current.addEventListener("mousemove", handleMouseMove)
-
-//       canvasOffsetLeft = canvasRef.current.offsetLeft
-//       canvasOffsetTop = canvasRef.current.offsetTop
-
-//       setContext(renderContext)
-//     }
-//   }
-// }, [context])
-//#endregion
-
-//#region more drawing effects
-
-// useEffect(() => {
-//   let mouseDown: boolean = false
-//   let start: Coords = { x: 0, y: 0 }
-//   let end: Coords = { x: 0, y: 0 }
-//   let [canvasOffsetLeft, canvasOffsetTop] = [0, 0]
-//   const setLineWidth: number = 10
-//   const paintColor: string = "#FF0000"
-//   const points: Array<Coords> = []
-
-//   const handleMouseDown = (e: MouseEvent): void => {
-//     //points.length can control whether you want to keep going on one line or not
-//     points.length = 0
-//     mouseDown = true
-
-//     start = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-
-//     end = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-//   }
-
-//   const handleMouseUp = (): void => {
-//     mouseDown = false
-//   }
-
-//   const handleMouseMove = (e: MouseEvent): void => {
-//     if (mouseDown && context) {
-//       start = {
-//         x: end.x,
-//         y: end.y,
-//       }
-
-//       end = {
-//         x: e.clientX + canvasOffsetLeft,
-//         y: e.clientY + canvasOffsetTop,
-//       }
-
-//       points.push(start)
-
-//       const firstPoint: Coords = points[0]
-
-//       context.strokeStyle = paintColor
-//       context.lineCap = "round"
-
-//       //miter limit can produce cool spiky effects
-//       context.miterLimit = 0.01
-
-//       context.fillStyle = paintColor
-//       context.lineWidth = setLineWidth
-
-//       if (points.length > 10) {
-//         context.beginPath()
-//         context.arc(
-//           firstPoint.x,
-//           firstPoint.y,
-//           setLineWidth / 2,
-//           0,
-//           Math.PI * 2
-//         )
-//         // context.fill()
-//         context.closePath()
-//       }
-
-//       context.beginPath()
-//       context.moveTo(firstPoint.x, firstPoint.y)
-
-//       const loopLength: number = points.length
-//       for (let i = 1; i < loopLength - 2; i++) {
-//         const bezierX: number = points[i].x
-//         const bezierY: number = points[i].y
-//         const endX: number = (bezierX + points[i].x) / 2
-//         const endY: number = (bezierY + points[i].y) / 2
-//         context.quadraticCurveTo(bezierX, bezierY, endX, endY)
-//       }
-
-//       //fun "cage effect if this is unchecked"
-//       // context.arc(
-//       //   firstPoint.x,
-//       //   firstPoint.y,
-//       //   setLineWidth / 2,
-//       //   0,
-//       //   Math.PI * 2
-//       // )
-
-//       context.lineTo(end.x, end.y)
-
-//       context.quadraticCurveTo(
-//         points[loopLength - 2].x,
-//         points[loopLength - 2].y,
-//         points[loopLength - 1].x,
-//         points[loopLength - 1].y
-//       )
-
-//       //an arc at the end can also produce cool textures
-
-//       // context.arc(
-//       //   points[loopLength - 1].x,
-//       //   points[loopLength - 1].y,
-//       //   setLineWidth / 2,
-//       //   0,
-//       //   Math.PI * 2
-//       // )
-
-//       //fill to have an alchemy like drag fill. haven't figured out path intersection yet though
-
-//       // context.fill()
-
-//       context.stroke()
-//       context.closePath()
-
-//       //points.length here to zero to get fun stutter effect
-//       // points.length = 0
-//     }
-//   }
-//   if (canvasRef.current) {
-//     const renderContext = canvasRef.current.getContext("2d")
-
-//     if (renderContext) {
-//       canvasRef.current.addEventListener("mousedown", handleMouseDown)
-//       canvasRef.current.addEventListener("mouseup", handleMouseUp)
-//       canvasRef.current.addEventListener("mousemove", handleMouseMove)
-
-//       canvasOffsetLeft = canvasRef.current.offsetLeft
-//       canvasOffsetTop = canvasRef.current.offsetTop
-
-//       setContext(renderContext)
-//     }
-//   }
-// }, [context])
-//#endregion
-
-//#region more drawing effects
-// useEffect(() => {
-//   let mouseDown: boolean = false
-//   let start: Coords = { x: 0, y: 0 }
-//   let end: Coords = { x: 0, y: 0 }
-//   let [canvasOffsetLeft, canvasOffsetTop] = [0, 0]
-//   const setLineWidth: number = 10
-//   const paintColor: string = "#FF0000"
-//   const points: Array<Coords> = []
-
-//   const handleMouseDown = (e: MouseEvent): void => {
-//     //points.length can control whether you want to keep going on one line or not. but WON'T Work with an arc on the end
-//     points.length = 0
-//     mouseDown = true
-
-//     start = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-
-//     end = {
-//       x: e.clientX - canvasOffsetLeft,
-//       y: e.clientY - canvasOffsetTop,
-//     }
-//   }
-
-//   const handleMouseUp = (): void => {
-//     mouseDown = false
-//   }
-
-//   const handleMouseMove = (e: MouseEvent): void => {
-//     if (mouseDown && context) {
-//       start = {
-//         x: end.x,
-//         y: end.y,
-//       }
-
-//       end = {
-//         x: e.clientX + canvasOffsetLeft,
-//         y: e.clientY + canvasOffsetTop,
-//       }
-
-//       points.push(start)
-
-//       const firstPoint: Coords = points[0]
-
-//       context.strokeStyle = paintColor
-//       context.lineCap = "round"
-
-//       //miter limit can produce cool spiky effects
-//       context.miterLimit = 0.01
-
-//       context.lineWidth = setLineWidth
-
-//       if (points.length > 10) {
-//         context.beginPath()
-//         context.arc(
-//           firstPoint.x,
-//           firstPoint.y,
-//           setLineWidth / 2,
-//           0,
-//           Math.PI * 2
-//         )
-//         // context.fill()
-//         context.closePath()
-//       }
-
-//       //eyedropper
-//       console.log(context.getImageData(start.x, start.y, 3, 3))
-
-//       //before doing canvas color, do this
-//       // context.globalCompositeOperation = "destination-over"
-
-//       //reflect x
-//       // context.translate(0, window.innerHeight)
-//       // context.scale(1, -1)
-
-//       //reflect y
-//       context.translate(window.innerWidth, 0)
-//       context.scale(-1, 1)
-
-//       context.beginPath()
-//       context.moveTo(firstPoint.x, firstPoint.y)
-
-//       const loopLength: number = points.length
-//       if (loopLength) {
-//         for (let i = 1; i < loopLength - 2; i++) {
-//           const bezierX: number = points[i].x
-//           const bezierY: number = points[i].y
-//           const endX: number = (bezierX + points[i].x) / 2
-//           const endY: number = (bezierY + points[i].y) / 2
-//           context.quadraticCurveTo(bezierX, bezierY, endX, endY)
-//         }
-
-//         //fun "cage? effect if this is unchecked
-//         context.arc(
-//           firstPoint.x,
-//           firstPoint.y,
-//           setLineWidth / 2,
-//           0,
-//           Math.PI * 2
-//         )
-
-//         context.lineTo(end.x, end.y)
-
-//         // context.quadraticCurveTo(
-//         //   points[loopLength - 2].x,
-//         //   points[loopLength - 2].y,
-//         //   points[loopLength - 1].x,
-//         //   points[loopLength - 1].y
-//         // )
-
-//         const gradient = context.createLinearGradient(
-//           canvasOffsetTop,
-//           canvasOffsetLeft,
-//           end.x,
-//           end.y
-//         )
-
-//         gradient.addColorStop(0, "#404ce7")
-//         gradient.addColorStop(0.5, "#e4306c80")
-//         gradient.addColorStop(0.75, "#e4306cbf")
-//         gradient.addColorStop(1, "#ffc74100")
-
-//         context.fillStyle = gradient
-
-//         //an arc at the end can also produce cool textures
-
-//         // context.arc(
-//         //   points[loopLength - 1].x,
-//         //   points[loopLength - 1].y,
-//         //   setLineWidth / 2,
-//         //   0,
-//         //   Math.PI * 2
-//         // )
-
-//         //fill to have an alchemy like drag fill. haven't figured out path intersection yet though
-
-//         context.fill()
-
-//         // context.stroke()
-//         context.closePath()
-
-//         //points.length here to zero to get fun stutter effect
-//         // points.length = 0
-//       }
-//     }
-//   }
-//   if (canvasRef.current) {
-//     const renderContext = canvasRef.current.getContext("2d")
-
-//     if (renderContext) {
-//       canvasRef.current.addEventListener("mousedown", handleMouseDown)
-//       canvasRef.current.addEventListener("mouseup", handleMouseUp)
-//       canvasRef.current.addEventListener("mousemove", handleMouseMove)
-
-//       canvasOffsetLeft = canvasRef.current.offsetLeft
-//       canvasOffsetTop = canvasRef.current.offsetTop
-
-//       setContext(renderContext)
-//     }
-//   }
-// }, [context])
-//#endregion
-//#endregion
-
-//I think my mental model on this has been wrong. If it is rerendered each time the tooloptions changes, we need to play to that. So, let's continue work on some of the other stuff, like color options and then come back to this and refactor it to that. we may need a separate control flow for each group of options. Also, it looks pretty responsive when you aren't mixing options as hardcoded and from state, which makes sense.
 
 const useCanvasLogic = ({
   innerWidth,
@@ -468,13 +16,7 @@ const useCanvasLogic = ({
   toolOptions,
   canvasRef,
 }: canvasLogic): void => {
-  // const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-  let context = useRef<CanvasRenderingContext2D | null>(null).current
-
-  // useEffect(() => {
-  //   if (context) console.log(context.getTransform())
-  // }, [toolOptions])
-
+  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
   useEffect((): void => {
     let mouseDown: boolean = false
     let [canvasOffsetLeft, canvasOffsetTop]: number[] = [0, 0]
@@ -499,6 +41,14 @@ const useCanvasLogic = ({
 
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       if (context) {
+        start = {
+          x: clientX - canvasOffsetLeft,
+          y: clientY - canvasOffsetTop,
+        }
+
+        end = start
+        mouseDown = true
+
         if (root.children.length < 3) {
           tempCanvas = document.createElement("canvas")
           tempCanvas.id = "temp-canvas"
@@ -522,13 +72,17 @@ const useCanvasLogic = ({
         }
 
         if (solidOrGrad === grad) {
-          const gradient = setGradient(
-            canvasOffsetLeft,
+          const gradient: CanvasGradient = context.createLinearGradient(
             canvasOffsetTop,
-            end,
-            context,
-            colorStops
+            canvasOffsetLeft,
+            end.x,
+            end.y
           )
+
+          colorStops.forEach((colorStop: colorStop): void => {
+            gradient.addColorStop(colorStop.position, colorStop.color)
+          })
+
           if (currentTool === brush || currentTool === eraser) {
             tempContext.strokeStyle = gradient
             tempContext.fillStyle = "#FFFFFF00"
@@ -537,14 +91,6 @@ const useCanvasLogic = ({
             tempContext.fillStyle = gradient
           }
         }
-
-        start = {
-          x: clientX - canvasOffsetLeft,
-          y: clientY - canvasOffsetTop,
-        }
-
-        end = start
-        mouseDown = true
       }
     }
 
@@ -561,10 +107,26 @@ const useCanvasLogic = ({
           y: clientY + canvasOffsetTop,
         }
 
-        drawingLoop(tempContext, start, points, lineWidth)
+        points.push(start)
 
-        // this is what causes multiple lines
-        // tempContext.lineTo(end.x, end.y)
+        const firstPoint: coords = points[0]
+
+        tempContext.beginPath()
+        tempContext.arc(firstPoint.x, firstPoint.y, 0, 0, Math.PI * 2)
+        tempContext.closePath()
+
+        tempContext.beginPath()
+        tempContext.moveTo(firstPoint.x, firstPoint.y)
+
+        const loopLength: number = points.length
+        if (loopLength)
+          for (let i = 1; i < loopLength - 2; i++) {
+            const bezierX: number = points[i].x
+            const bezierY: number = points[i].y
+            const endX: number = (bezierX + points[i].x) / 2
+            const endY: number = (bezierY + points[i].y) / 2
+            tempContext.quadraticCurveTo(bezierX, bezierY, endX, endY)
+          }
 
         if (currentTool === brush || currentTool === eraser)
           tempContext.stroke()
@@ -572,10 +134,11 @@ const useCanvasLogic = ({
         tempContext.closePath()
         context.drawImage(tempCanvas, 0, 0)
         if (reflectX) {
-          context.save()
           tempContext.transform(-1, 0, 0, 1, innerWidth, 0)
           context.drawImage(tempCanvas, 0, 0)
-          tempContext.resetTransform()
+        } else if (reflectY) {
+          tempContext.transform(1, 0, 0, -1, 0, innerHeight)
+          context.drawImage(tempCanvas, 0, 0)
         }
       }
     }
@@ -584,30 +147,12 @@ const useCanvasLogic = ({
       if (mouseDown && context) {
         mouseDown = false
         points.length = 0
-
-        // if (reflectX) {
-        //   tempContext.transform(-1, 0, 0, 1, innerWidth, 0)
-        //   context.drawImage(tempCanvas, 0, 0)
-        // } else if (reflectY) {
-        // context.setTransform(1, 0, 0, -1, 0, innerHeight)
-        //   context.drawImage(tempCanvas, 0, 0)
-        //   context.setTransform(1, 0, 0, 1, 0, 0)
-        // }
-        // context.save()
-        // context.setTransform(1, 0, 0, 1, 0, 0)
-        // context.clearRect(0, 0, innerWidth, innerHeight)
-        // context.restore()
-        // context.drawImage(tempCanvas, 0, 0)
-        // context.setTransform(-1, 0, 0, 1, innerWidth, 0)
-        // context.drawImage(tempCanvas, 0, 0)
-        // context.setTransform(1, 0, 0, 1, 0, 0)
       }
     }
 
-    if (canvasRef.current && !context) {
+    if (canvasRef.current) {
       const renderContext = canvasRef.current.getContext("2d")
 
-      console.log("setting up")
       if (renderContext) {
         canvasRef.current.addEventListener("mousedown", handleMouseDown)
         canvasRef.current.addEventListener("mousemove", handleMouseMove)
@@ -616,8 +161,7 @@ const useCanvasLogic = ({
         canvasOffsetLeft = canvasRef.current.offsetLeft
         canvasOffsetTop = canvasRef.current.offsetTop
 
-        // setContext(renderContext)
-        context = renderContext
+        setContext(renderContext)
       }
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio)
