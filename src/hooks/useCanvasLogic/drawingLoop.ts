@@ -26,13 +26,6 @@ const drawingLoop = (
       const endY: number = (bezierY + points[i].y) / 2
       context.quadraticCurveTo(bezierX, bezierY, endX, endY)
     }
-
-  context.quadraticCurveTo(
-    points[points.length - 2].x,
-    points[points.length - 2].y,
-    points[points.length - 1].x,
-    points[points.length - 1].y
-  )
 }
 
 export default drawingLoop

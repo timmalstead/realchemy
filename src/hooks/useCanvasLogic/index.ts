@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import setGradient from "./setGradient"
 import drawingLoop from "./drawingLoop"
 import { canvasLogic } from "../../@types/props"
@@ -468,7 +468,13 @@ const useCanvasLogic = ({
   toolOptions,
   canvasRef,
 }: canvasLogic): void => {
-  const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
+  // const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
+  let context = useRef<CanvasRenderingContext2D | null>(null).current
+
+  // useEffect(() => {
+  //   if (context) console.log(context.getTransform())
+  // }, [toolOptions])
+
   useEffect((): void => {
     let mouseDown: boolean = false
     let [canvasOffsetLeft, canvasOffsetTop]: number[] = [0, 0]
@@ -493,16 +499,14 @@ const useCanvasLogic = ({
 
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       if (context) {
-        if (reflectX || reflectY) {
-          if (root.children.length < 3) {
-            tempCanvas = document.createElement("canvas")
-            tempCanvas.id = "temp-canvas"
-            root.appendChild(tempCanvas)
-          } else tempCanvas = document.getElementById("temp-canvas")
-          tempContext = tempCanvas.getContext("2d")
-          tempCanvas.width = innerWidth
-          tempCanvas.height = innerHeight
-        }
+        if (root.children.length < 3) {
+          tempCanvas = document.createElement("canvas")
+          tempCanvas.id = "temp-canvas"
+          root.appendChild(tempCanvas)
+        } else tempCanvas = document.getElementById("temp-canvas")
+        tempContext = tempCanvas.getContext("2d")
+        tempCanvas.width = innerWidth
+        tempCanvas.height = innerHeight
 
         if (currentTool === brush || currentTool === eraser)
           tempContext.lineWidth = lineWidth
@@ -546,6 +550,7 @@ const useCanvasLogic = ({
 
     const handleMouseMove = ({ clientX, clientY }: MouseEvent): void => {
       if (mouseDown && context && tempContext) {
+        context.save()
         start = {
           x: end.x,
           y: end.y,
@@ -565,6 +570,13 @@ const useCanvasLogic = ({
           tempContext.stroke()
         else if (currentTool === freehand) tempContext.fill()
         tempContext.closePath()
+        context.drawImage(tempCanvas, 0, 0)
+        if (reflectX) {
+          context.save()
+          tempContext.transform(-1, 0, 0, 1, innerWidth, 0)
+          context.drawImage(tempCanvas, 0, 0)
+          tempContext.resetTransform()
+        }
       }
     }
 
@@ -573,16 +585,29 @@ const useCanvasLogic = ({
         mouseDown = false
         points.length = 0
 
-        context.drawImage(tempCanvas, 0, 0)
-        context.setTransform(-1, 0, 0, 1, innerWidth, 0)
-        context.drawImage(tempCanvas, 0, 0)
-        context.setTransform(1, 0, 0, 1, 0, 0)
+        // if (reflectX) {
+        //   tempContext.transform(-1, 0, 0, 1, innerWidth, 0)
+        //   context.drawImage(tempCanvas, 0, 0)
+        // } else if (reflectY) {
+        // context.setTransform(1, 0, 0, -1, 0, innerHeight)
+        //   context.drawImage(tempCanvas, 0, 0)
+        //   context.setTransform(1, 0, 0, 1, 0, 0)
+        // }
+        // context.save()
+        // context.setTransform(1, 0, 0, 1, 0, 0)
+        // context.clearRect(0, 0, innerWidth, innerHeight)
+        // context.restore()
+        // context.drawImage(tempCanvas, 0, 0)
+        // context.setTransform(-1, 0, 0, 1, innerWidth, 0)
+        // context.drawImage(tempCanvas, 0, 0)
+        // context.setTransform(1, 0, 0, 1, 0, 0)
       }
     }
 
-    if (canvasRef.current) {
+    if (canvasRef.current && !context) {
       const renderContext = canvasRef.current.getContext("2d")
 
+      console.log("setting up")
       if (renderContext) {
         canvasRef.current.addEventListener("mousedown", handleMouseDown)
         canvasRef.current.addEventListener("mousemove", handleMouseMove)
@@ -591,7 +616,8 @@ const useCanvasLogic = ({
         canvasOffsetLeft = canvasRef.current.offsetLeft
         canvasOffsetTop = canvasRef.current.offsetTop
 
-        setContext(renderContext)
+        // setContext(renderContext)
+        context = renderContext
       }
       if (context) {
         context.scale(devicePixelRatio, devicePixelRatio)
