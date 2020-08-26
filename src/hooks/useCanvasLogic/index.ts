@@ -493,13 +493,14 @@ const useCanvasLogic = ({
 
     const handleMouseDown = ({ clientX, clientY }: MouseEvent): void => {
       if (context) {
+        mouseDown = true
+
         start = {
           x: clientX - canvasOffsetLeft,
           y: clientY - canvasOffsetTop,
         }
 
         end = start
-        mouseDown = true
 
         if (root.children.length < 3) {
           tempCanvas = document.createElement("canvas")
@@ -572,7 +573,7 @@ const useCanvasLogic = ({
         } else if (reflectY) {
           tempContext.transform(1, 0, 0, -1, 0, innerHeight)
           context.drawImage(tempCanvas, 0, 0)
-        } else return
+        }
       }
     }
 
@@ -580,13 +581,13 @@ const useCanvasLogic = ({
       if (mouseDown && context && tempContext) {
         mouseDown = false
         points.length = 0
+        // if (!reflectX || !reflectY) tempCanvas.remove()
       }
     }
 
     if (canvasRef.current) {
       const renderContext = canvasRef.current.getContext("2d")
 
-      console.log("setting up")
       if (renderContext) {
         canvasRef.current.addEventListener("mousedown", handleMouseDown)
         canvasRef.current.addEventListener("mousemove", handleMouseMove)
