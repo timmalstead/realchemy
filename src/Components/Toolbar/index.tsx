@@ -20,7 +20,7 @@ import {
 } from "../../@types/objects"
 import { Tools, ToolHeader, CollapseArrow, ToolHolder } from "./style"
 
-const startingPosition: coords = { x: window.innerWidth - 150, y: 50 }
+const startingPosition: coords = { x: innerWidth - 150, y: 50 }
 
 const Toolbar: FC<appToToolbar> = ({
   setToolOptions,

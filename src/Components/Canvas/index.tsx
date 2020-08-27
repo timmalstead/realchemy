@@ -6,12 +6,8 @@ const Canvas: FC<appToCanvas> = ({
   toolOptions,
 }: appToCanvas): ReactElement => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const { innerWidth, innerHeight, devicePixelRatio } = window
 
   useCanvasLogic({
-    innerWidth,
-    innerHeight,
-    devicePixelRatio,
     toolOptions,
     canvasRef,
   })

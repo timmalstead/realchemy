@@ -1,7 +1,7 @@
 import React, { FC, ReactElement, useReducer, Reducer } from "react"
-import useLocalStorageOnUnload from "./hooks/useLocalStorageOnUnload"
 import Toolbar from "./components/Toolbar"
 import Canvas from "./components/Canvas"
+import useLocalStorageOnUnload from "./hooks/useLocalStorageOnUnload"
 import { initOpts, drawingOptionsReducer } from "./constants/"
 import { drawingOptions, toolbarStateAction } from "./@types/objects"
 

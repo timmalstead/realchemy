@@ -1,18 +1,11 @@
 import { useState, useEffect } from "react"
 import canvasPrep from "./canvasPrep"
 import createTempCanvas from "./createTempCanvas"
-import setGradient from "./setGradient"
+import setContextOptions from "./setContextOptions"
 import drawingLoop from "./drawingLoop"
 import { canvasLogic } from "../../@types/props"
 import { coords } from "../../@types/objects"
-import {
-  brush,
-  eraser,
-  freehand,
-  eyedropper,
-  grad,
-  solid,
-} from "../../constants/drawingOptionsTypes"
+import { brush, eraser, freehand } from "../../constants/drawingOptionsTypes"
 
 //#region other drawing logic
 // #region drawing
@@ -461,13 +454,7 @@ import {
 //#endregion
 //#endregion
 
-const useCanvasLogic = ({
-  innerWidth,
-  innerHeight,
-  devicePixelRatio,
-  toolOptions,
-  canvasRef,
-}: canvasLogic): void => {
+const useCanvasLogic = ({ toolOptions, canvasRef }: canvasLogic): void => {
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
 
   useEffect((): void => {
@@ -503,37 +490,18 @@ const useCanvasLogic = ({
 
         end = start
 
-        tempCanvas = createTempCanvas(root, tempCanvas, innerWidth, innerHeight)
-
-        tempContext = tempCanvas.getContext("2d")
-        tempContext.lineWidth = lineWidth
-
-        if (solidOrGrad === solid) {
-          if (currentTool === brush || currentTool === eraser) {
-            tempContext.strokeStyle = solidColor
-            tempContext.fillStyle = "#FFFFFF00"
-          } else if (currentTool === freehand) {
-            tempContext.strokeStyle = "#FFFFFF00"
-            tempContext.fillStyle = solidColor
-          }
-        }
-
-        if (solidOrGrad === grad) {
-          const gradient = setGradient(
-            canvasOffsetLeft,
-            canvasOffsetTop,
-            end,
-            tempContext,
-            colorStops
-          )
-          if (currentTool === brush || currentTool === eraser) {
-            tempContext.strokeStyle = gradient
-            tempContext.fillStyle = "#FFFFFF00"
-          } else if (currentTool === freehand) {
-            tempContext.strokeStyle = "#FFFFFF00"
-            tempContext.fillStyle = gradient
-          }
-        }
+        tempCanvas = createTempCanvas(root, tempCanvas)
+        tempContext = setContextOptions(
+          tempCanvas,
+          lineWidth,
+          solidOrGrad,
+          currentTool,
+          solidColor,
+          canvasOffsetLeft,
+          canvasOffsetTop,
+          end,
+          colorStops
+        )
       }
     }
 
@@ -593,7 +561,7 @@ const useCanvasLogic = ({
         context.scale(devicePixelRatio, devicePixelRatio)
         if (isClear) {
           //use clearing color
-        } else canvasPrep(context, innerWidth, innerHeight)
+        } else canvasPrep(context)
       }
     }
   }, [context, toolOptions])

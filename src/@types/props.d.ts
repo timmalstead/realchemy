@@ -2,9 +2,6 @@ import { MutableRefObject, Dispatch } from "react"
 import { drawingOptions, toolbarState, toolbarStateAction } from "./objects"
 
 export interface canvasLogic {
-  innerWidth: number
-  innerHeight: number
-  devicePixelRatio: number
   canvasRef: MutableRefObject<HTMLCanvasElement>
   toolOptions: drawingOptions
 }
