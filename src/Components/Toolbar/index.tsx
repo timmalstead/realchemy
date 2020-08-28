@@ -58,9 +58,9 @@ const Toolbar: FC<appToToolbar> = ({
   return (
     <Tools style={dragPosition}>
       <ToolHeader
-        onMouseDown={e => handleMouseDown(e)}
-        onMouseMove={e => handleMouseMove(e)}
-        onMouseLeave={e => handleMouseMove(e)}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseMove}
         onMouseUp={handleMouseUp}
         isDragging={isDragging}
       >

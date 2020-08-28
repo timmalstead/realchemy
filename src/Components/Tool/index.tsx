@@ -23,7 +23,9 @@ const Tool: FC<componentOption & toolbarToTool> = ({
       if (eventKey === toolKey) handleToolClick()
     }
 
-    window.addEventListener("keydown", setToolWithKeyboard)
+    addEventListener("keydown", setToolWithKeyboard)
+
+    return () => removeEventListener("keydown", setToolWithKeyboard)
   }, [])
 
   let timeout: number

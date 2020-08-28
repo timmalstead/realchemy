@@ -8,6 +8,7 @@ const createCanvas = (
     tempCanvas.id = "temp-canvas"
     root.appendChild(tempCanvas)
   } else {
+    // @ts-ignore
     tempCanvas = document.getElementById("temp-canvas")
   }
   tempCanvas.width = innerWidth
