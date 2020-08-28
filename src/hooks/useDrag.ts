@@ -10,31 +10,37 @@ const useDrag = (startingPosition: coords) => {
     lastTranslation: startingPosition,
   })
 
+  const { isDragging } = dragInfo
+
   const handleMouseDown = ({
     clientX,
     clientY,
   }: MouseEvent<HTMLElement>): void => {
-    let [translation, lastTranslation]: coords[] = [
-      startingPosition,
-      startingPosition,
-    ]
-    if (savedPosition.current) {
-      translation = savedPosition.current.translation
-      lastTranslation = savedPosition.current.lastTranslation
+    if (!isDragging) {
+      let translation: coords, lastTranslation: coords
+
+      if (savedPosition.current) {
+        translation = savedPosition.current.translation
+        lastTranslation = savedPosition.current.lastTranslation
+      } else {
+        translation = startingPosition
+        lastTranslation = startingPosition
+      }
+
+      setDragInfo({
+        isDragging: true,
+        origin: { x: clientX, y: clientY },
+        translation,
+        lastTranslation,
+      })
     }
-    setDragInfo({
-      isDragging: true,
-      origin: { x: clientX, y: clientY },
-      translation,
-      lastTranslation,
-    })
   }
 
   const handleMouseMove = ({
     clientX,
     clientY,
   }: MouseEvent<HTMLElement>): void => {
-    if (dragInfo.isDragging) {
+    if (isDragging) {
       const { origin, lastTranslation } = dragInfo
       setDragInfo({
         ...dragInfo,
@@ -47,7 +53,7 @@ const useDrag = (startingPosition: coords) => {
   }
 
   const handleMouseUp = (): void => {
-    if (dragInfo.isDragging) {
+    if (isDragging) {
       const { translation } = dragInfo
       const newPositionData = {
         ...dragInfo,
@@ -60,16 +66,14 @@ const useDrag = (startingPosition: coords) => {
     }
   }
 
-  const toolbarPosition = {
+  const dragPosition = {
     left: `${dragInfo.translation.x}px`,
     top: `${dragInfo.translation.y}px`,
   }
 
-  const { isDragging } = dragInfo
-
   return {
     isDragging,
-    toolbarPosition,
+    dragPosition,
     handleMouseDown,
     handleMouseMove,
     handleMouseUp,
