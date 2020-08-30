@@ -1,9 +1,8 @@
 import React, { FC, ReactElement, useState, useEffect } from "react"
 import { ToolSquare, NamePopUp } from "./style"
-import { toolDefinitionTypes } from "../../@types/shapes"
 import { toolbarToTool } from "../../@types/props"
 
-const Tool: FC<toolDefinitionTypes & toolbarToTool> = ({
+const Tool: FC<toolbarToTool> = ({
   name,
   reducerType,
   options,
@@ -12,7 +11,7 @@ const Tool: FC<toolDefinitionTypes & toolbarToTool> = ({
   isCollapsed,
   toolbarStateObject,
   dispatchToolbarState,
-}: toolDefinitionTypes & toolbarToTool): ReactElement => {
+}: toolbarToTool): ReactElement => {
   const [nameModal, showNameModal] = useState<boolean>(false)
 
   useEffect(() => {
