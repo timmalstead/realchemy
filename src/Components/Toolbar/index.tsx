@@ -9,15 +9,15 @@ import React, {
 import toolbarStateReducer from "./toolbarStateReducer"
 import initialToolbarState from "./initialToolbarState"
 import Tool from "../Tool"
-import toolbarComponentOptions from "../Tool/toolComponentOptions"
+import toolDefinitions from "../Tool/toolOptions"
 import { useDrag, useLocalStorageOnUnload } from "../../hooks/"
 import { appToToolbar } from "../../@types/props"
 import {
   coords,
-  componentOption,
+  toolDefinitionTypes,
   toolbarState,
   toolbarStateAction,
-} from "../../@types/objects"
+} from "../../@types/shapes"
 import { Tools, ToolHeader, CollapseArrow, ToolHolder } from "./style"
 
 const startingPosition: coords = { x: innerWidth - 150, y: 50 }
@@ -41,8 +41,8 @@ const Toolbar: FC<appToToolbar> = ({
 
   useLocalStorageOnUnload("toolbarState", toolbarStateObject)
 
-  const mappedTools: ReactElement[] = toolbarComponentOptions.map(
-    (options: componentOption, i: number): ReactElement => (
+  const mappedTools: ReactElement[] = toolDefinitions.map(
+    (options: toolDefinitionTypes, i: number): ReactElement => (
       <Fragment key={i}>
         <Tool
           {...options}

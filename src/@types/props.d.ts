@@ -1,17 +1,15 @@
 import { MutableRefObject, Dispatch } from "react"
-import { drawingOptions, toolbarState, toolbarStateAction } from "./objects"
+import { drawingOptions, toolbarState, toolbarStateAction } from "./shapes"
 
-export interface canvasLogic {
-  canvasRef: MutableRefObject<HTMLCanvasElement>
+export interface appToCanvas {
   toolOptions: drawingOptions
+}
+export interface canvasLogic extends appToCanvas {
+  canvasRef: MutableRefObject<HTMLCanvasElement>
 }
 
 export interface appToToolbar {
   setToolOptions: Dispatch<toolbarStateAction>
-}
-
-export interface appToCanvas {
-  toolOptions: drawingOptions
 }
 
 export interface toolbarToTool extends appToToolbar {

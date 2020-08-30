@@ -1,4 +1,4 @@
-import { colorPack, colorDefs } from "../@types/objects"
+import { colorPack, colorDefs } from "../@types/shapes"
 import { supportedEnvironments } from "../@types/literals"
 import isElectron from "./isElectron"
 

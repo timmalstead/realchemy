@@ -1,4 +1,4 @@
-import { toolbarState } from "../../@types/objects"
+import { toolbarState } from "../../@types/shapes"
 
 const initialToolbarState: toolbarState = localStorage.toolbarState
   ? JSON.parse(localStorage.toolbarState)

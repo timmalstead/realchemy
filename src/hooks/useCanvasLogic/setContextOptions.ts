@@ -1,5 +1,5 @@
 import { solidOrGrad, currentTool } from "../../@types/literals"
-import { coords, colorStop } from "../../@types/objects"
+import { coords, colorStop } from "../../@types/shapes"
 import setGradient from "./setGradient"
 import { freehand, grad } from "../../constants/drawingOptionsTypes"
 

@@ -3,7 +3,7 @@ import Toolbar from "./components/Toolbar"
 import Canvas from "./components/Canvas"
 import useLocalStorageOnUnload from "./hooks/useLocalStorageOnUnload"
 import { initOpts, drawingOptionsReducer } from "./constants/"
-import { drawingOptions, toolbarStateAction } from "./@types/objects"
+import { drawingOptions, toolbarStateAction } from "./@types/shapes"
 
 const App: FC = (): ReactElement => {
   const [drawingOptionsObject, dispatchDrawingOptions] = useReducer<

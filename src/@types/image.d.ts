@@ -1,6 +1,4 @@
-//I think svg should work as a string?
-
 declare module "*.svg" {
-  const svg: string
+  const svg: string //string should work, I think
   export default svg
 }

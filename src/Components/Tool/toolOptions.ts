@@ -1,4 +1,4 @@
-import { componentOption } from "../../@types/objects"
+import { toolDefinitionTypes } from "../../@types/shapes"
 import {
   X_REFLECT,
   Y_REFLECT,
@@ -10,7 +10,7 @@ import {
   LINE_WIDTH,
 } from "../Toolbar/toolbarStateReducerTypes"
 
-const compOptions: componentOption[] = [
+const toolDefinitions: toolDefinitionTypes[] = [
   {
     name: "Reflect X (X)",
     reducerType: X_REFLECT,
@@ -62,4 +62,4 @@ const compOptions: componentOption[] = [
   },
 ]
 
-export default compOptions
+export default toolDefinitions

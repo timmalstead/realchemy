@@ -1,4 +1,4 @@
-import { colorStop, coords } from "../../@types/objects"
+import { colorStop, coords } from "../../@types/shapes"
 
 const setGradient = (
   canvasOffsetLeft: number,

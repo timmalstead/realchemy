@@ -4,7 +4,7 @@ import createTempCanvas from "./createTempCanvas"
 import setContextOptions from "./setContextOptions"
 import drawingLoop from "./drawingLoop"
 import { canvasLogic } from "../../@types/props"
-import { coords } from "../../@types/objects"
+import { coords } from "../../@types/shapes"
 import { brush, eraser, freehand } from "../../constants/drawingOptionsTypes"
 
 //#region other drawing logic

@@ -1,4 +1,4 @@
-import { coords } from "../../@types/objects"
+import { coords } from "../../@types/shapes"
 
 const drawingLoop = (
   context: CanvasRenderingContext2D,

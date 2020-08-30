@@ -8,7 +8,7 @@ import {
   CLEAR,
   LINE_WIDTH,
 } from "./toolbarStateReducerTypes"
-import { toolbarState, toolbarStateAction } from "../../@types/objects"
+import { toolbarState, toolbarStateAction } from "../../@types/shapes"
 
 const toolbarStateReducer = (
   state: toolbarState,

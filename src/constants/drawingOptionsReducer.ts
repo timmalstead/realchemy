@@ -16,7 +16,7 @@ import {
   CLEAR,
   LINE_WIDTH,
 } from "../components/Toolbar/toolbarStateReducerTypes"
-import { drawingOptions, toolbarStateAction } from "../@types/objects"
+import { drawingOptions, toolbarStateAction } from "../@types/shapes"
 
 const drawingOptionsReducer = (
   state: drawingOptions,

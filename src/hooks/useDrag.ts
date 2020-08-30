@@ -1,5 +1,5 @@
 import { useState, useRef, MouseEvent } from "react"
-import { coords, positionParams } from "../@types/objects"
+import { coords, positionParams } from "../@types/shapes"
 
 const useDrag = (startingPosition: coords) => {
   const savedPosition = useRef<positionParams | null>(null)
