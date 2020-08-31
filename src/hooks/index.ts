@@ -1,5 +1,3 @@
-import useCanvasLogic from "./useCanvasLogic"
-import useDrag from "./useDrag"
-import useLocalStorageOnUnload from "./useLocalStorageOnUnload"
-
-export { useCanvasLogic, useDrag, useLocalStorageOnUnload }
+export { default as useCanvasLogic } from "./useCanvasLogic"
+export { default as useDrag } from "./useDrag"
+export { default as useLocalStorageOnUnload } from "./useLocalStorageOnUnload"

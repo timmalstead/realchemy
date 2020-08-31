@@ -1,7 +1,7 @@
-import colorTheme from "./colors"
-import isElectron from "./isElectron"
-import initOpts from "./initialDrawingOptions"
-import drawingOptionsReducer from "./drawingOptionsReducer"
+export { default as colorTheme } from "./colors"
+export { default as isElectron } from "./isElectron"
+export { default as initOpts } from "./initialDrawingOptions"
+export { default as drawingOptionsReducer } from "./drawingOptionsReducer"
 import {
   brush,
   eraser,
@@ -11,15 +11,4 @@ import {
   grad,
 } from "./drawingOptionsTypes"
 
-export {
-  colorTheme,
-  isElectron,
-  initOpts,
-  drawingOptionsReducer,
-  brush,
-  eraser,
-  freehand,
-  eyedropper,
-  solid,
-  grad,
-}
+export { brush, eraser, freehand, eyedropper, solid, grad }
